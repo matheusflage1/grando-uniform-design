@@ -7,7 +7,7 @@ const Hero = () => {
   const whatsappLink = "https://api.whatsapp.com/send/?phone=555433831351&text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa&type=phone_number&app_absent=0";
 
   return (
-    <section className="pt-32 bg-gradient-to-r from-[#CECED1] to-[#E8E8EA] font-inter">
+    <section className="pt-32 bg-[#ECE08A] font-inter">
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-8 items-center py-12">
           <div className="space-y-6">
@@ -29,15 +29,19 @@ const Hero = () => {
           </div>
           <div className="flex justify-center">
             <img 
-              src="/lovable-uploads/525fb8fe-e0b1-44bd-b579-5eaadae77deb.png" 
+              src="/lovable-uploads/a27bd5ee-7287-44ca-9ce0-bdfee26a5a1b.png" 
               alt="Uniformes Profissionais" 
               className="w-full h-auto"
             />
           </div>
         </div>
 
-        {/* Client Logos moved here */}
-        <ClientLogos />
+        {/* Client Logos moved here with white background */}
+        <div className="bg-white py-8 -mx-6">
+          <div className="px-6">
+            <ClientLogos />
+          </div>
+        </div>
       </div>
       
       <div className="bg-white py-16">
