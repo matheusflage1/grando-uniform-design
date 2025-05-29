@@ -33,7 +33,7 @@ const WorkProcess = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-4">
-            Como Trabalhamos – Etapas
+            Como Trabalhamos
           </h2>
         </div>
         
@@ -64,7 +64,7 @@ const WorkProcess = () => {
             className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-3 rounded-lg"
           >
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-              CLIQUE AQUI
+              FALE COM UM CONSULTOR
             </a>
           </Button>
         </div>

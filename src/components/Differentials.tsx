@@ -1,30 +1,31 @@
 
 import React from 'react';
+import { Users, Scissors, Shirt, ShoppingCart, CheckCircle, Package, BarChart3, RotateCcw, Ruler } from 'lucide-react';
 
 const Differentials = () => {
   const differentials = [
     {
       title: "Qualidade Premium",
       items: [
-        "Grade de tamanhos do 34 ao 62",
-        "Costuras premium que não desfiam",
-        "Tecidos de alta qualidade"
+        { icon: <Ruler className="w-4 h-4" />, text: "Grade de tamanhos do 34 ao 62" },
+        { icon: <Scissors className="w-4 h-4" />, text: "Costuras premium que não desfiam" },
+        { icon: <Shirt className="w-4 h-4" />, text: "Tecidos de alta qualidade" }
       ]
     },
     {
       title: "Processo Facilitado",
       items: [
-        "Loja virtual para pedidos",
-        "Aprovação de peças piloto (físicas ou digitais)",
-        "Entrega por kits personalizados por colaborador"
+        { icon: <ShoppingCart className="w-4 h-4" />, text: "Loja virtual para pedidos" },
+        { icon: <CheckCircle className="w-4 h-4" />, text: "Aprovação de peças piloto (físicas ou digitais)" },
+        { icon: <Package className="w-4 h-4" />, text: "Entrega por kits personalizados por colaborador" }
       ]
     },
     {
       title: "Pós-venda",
       items: [
-        "Relatórios gerenciais dos pedidos",
-        "Consultoria para medição da equipe",
-        "Reposição facilitada"
+        { icon: <BarChart3 className="w-4 h-4" />, text: "Relatórios gerenciais dos pedidos" },
+        { icon: <Users className="w-4 h-4" />, text: "Consultoria para medição da equipe" },
+        { icon: <RotateCcw className="w-4 h-4" />, text: "Reposição facilitada" }
       ]
     }
   ];
@@ -47,8 +48,8 @@ const Differentials = () => {
               <ul className="space-y-2">
                 {differential.items.map((item, itemIndex) => (
                   <li key={itemIndex} className="flex items-start">
-                    <span className="text-green-500 mr-2">✅</span>
-                    <span className="text-gray-700">{item}</span>
+                    <span className="text-green-500 mr-2 mt-1">{item.icon}</span>
+                    <span className="text-gray-700">{item.text}</span>
                   </li>
                 ))}
               </ul>

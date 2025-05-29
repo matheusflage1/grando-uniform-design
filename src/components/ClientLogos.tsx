@@ -18,7 +18,7 @@ const ClientLogos = () => {
               key={index}
               src={client.src} 
               alt={client.alt} 
-              className="h-12 lg:h-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
+              className="h-16 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
             />
           ))}
         </div>

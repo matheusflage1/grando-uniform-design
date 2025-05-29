@@ -8,16 +8,16 @@ const Footer = () => {
         <img 
           src="/lovable-uploads/ba16b65e-acda-4529-a800-823145226d7b.png" 
           alt="Natalia Grando Logo" 
-          className="h-10 mx-auto mb-4"
+          className="h-16 mx-auto mb-4"
         />
-        <div className="text-[#1B1B0C] space-y-2">
+        <div className="text-[#1B1B0C] space-y-2 text-base">
           <p className="font-semibold">
             Telefone: (54) 3383 1351
           </p>
           <p>
             E-mail: comercial@nataliagrando.com.br
           </p>
-          <p className="text-sm">
+          <p>
             Atendimento: Segunda a Sexta, das 9h às 18h
           </p>
         </div>

@@ -7,7 +7,9 @@ const Benefits = () => {
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-6">
-            Seus uniformes não precisam ser um problema — precisam ser uma solução.
+            <span className="animate-text-color">
+              Seus uniformes não precisam ser um problema — precisam ser uma solução.
+            </span>
           </h2>
           <p className="text-lg text-gray-700 leading-relaxed">
             Com foco total na escolha de tecidos de alta qualidade e acabamentos impecáveis, 

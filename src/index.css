@@ -92,4 +92,31 @@
   .font-inter {
     font-family: 'Inter', sans-serif;
   }
+
+  .animate-text-color {
+    background: linear-gradient(90deg, 
+      #dc2626 0%, 
+      #dc2626 20%, 
+      #ea580c 30%, 
+      #eab308 40%, 
+      #84cc16 50%, 
+      #22c55e 60%, 
+      #16a34a 80%, 
+      #16a34a 100%
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: colorSlide 4s ease-in-out infinite;
+  }
+
+  @keyframes colorSlide {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
 }
