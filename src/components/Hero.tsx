@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import ClientLogos from './ClientLogos';
@@ -35,13 +34,11 @@ const Hero = () => {
             />
           </div>
         </div>
+      </div>
 
-        {/* Client Logos moved here with white background */}
-        <div className="bg-white py-8 -mx-6">
-          <div className="px-6">
-            <ClientLogos />
-          </div>
-        </div>
+      {/* Client Logos full width without spacing */}
+      <div className="bg-white py-8 w-full">
+        <ClientLogos />
       </div>
       
       <div className="bg-white py-16">
