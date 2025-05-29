@@ -6,9 +6,9 @@ const Hero = () => {
   const whatsappLink = "https://api.whatsapp.com/send/?phone=555433831351&text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa&type=phone_number&app_absent=0";
 
   return (
-    <section className="pt-24 bg-[#ECE08A] font-inter min-h-screen flex items-center">
+    <section className="pt-24 bg-[#ECE08A] font-inter">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[calc(100vh-6rem)]">
+        <div className="grid lg:grid-cols-2 gap-8 items-center py-16">
           <div className="space-y-6">
             <h1 className="text-4xl lg:text-5xl font-bold text-[#1B1B0C] leading-tight">
               Uniformes corporativos de alta durabilidade e qualidade.
@@ -26,12 +26,29 @@ const Hero = () => {
               </a>
             </Button>
           </div>
-          <div className="flex justify-center h-full">
+          <div className="flex justify-center">
             <img 
-              src="/lovable-uploads/2368c040-635f-4c4d-ad03-30011f0af2f8.png" 
+              src="/lovable-uploads/525fb8fe-e0b1-44bd-b579-5eaadae77deb.png" 
               alt="Uniformes Profissionais" 
-              className="w-full h-full object-cover rounded-2xl shadow-xl"
+              className="w-full h-auto rounded-2xl shadow-xl"
             />
+          </div>
+        </div>
+      </div>
+      
+      <div className="bg-white py-16">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-6">
+              <span className="animate-text-color">
+                Seus uniformes não precisam ser um problema — precisam ser uma solução.
+              </span>
+            </h2>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              Com foco total na escolha de tecidos de alta qualidade e acabamentos impecáveis, 
+              evitamos reposições recorrentes e entregamos uniformes que beneficiam tanto sua 
+              empresa quanto seus colaboradores.
+            </p>
           </div>
         </div>
       </div>

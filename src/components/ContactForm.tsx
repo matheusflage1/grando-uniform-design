@@ -33,9 +33,9 @@ const ContactForm = () => {
         <div className="max-w-2xl mx-auto">
           <div className="bg-white p-8 rounded-xl shadow-sm text-center">
             <img 
-              src="/lovable-uploads/ba16b65e-acda-4529-a800-823145226d7b.png" 
+              src="/lovable-uploads/4376058e-6435-4383-808e-6c861f93344c.png" 
               alt="Natalia Grando Logo" 
-              className="h-16 mx-auto mb-6"
+              className="h-20 mx-auto mb-6"
             />
             <h2 className="text-3xl font-bold text-[#1B1B0C] mb-4">
               Fale conosco
