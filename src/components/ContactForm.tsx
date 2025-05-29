@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -35,12 +34,12 @@ const ContactForm = () => {
             <img 
               src="/lovable-uploads/4376058e-6435-4383-808e-6c861f93344c.png" 
               alt="Natalia Grando Logo" 
-              className="h-20 mx-auto mb-6"
+              className="h-28 mx-auto mb-8"
             />
             <h2 className="text-3xl font-bold text-[#1B1B0C] mb-4">
               Fale conosco
             </h2>
-            <p className="text-lg text-gray-700 mb-8">
+            <p className="text-lg text-gray-700 mb-10">
               Solicite seu orçamento agora e leve a qualidade premium para sua empresa!
             </p>
             

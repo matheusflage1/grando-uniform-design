@@ -1,14 +1,15 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import ClientLogos from './ClientLogos';
 
 const Hero = () => {
   const whatsappLink = "https://api.whatsapp.com/send/?phone=555433831351&text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa&type=phone_number&app_absent=0";
 
   return (
-    <section className="pt-24 bg-[#ECE08A] font-inter">
+    <section className="pt-32 bg-gradient-to-r from-[#CECED1] to-[#E8E8EA] font-inter">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-8 items-center py-16">
+        <div className="grid lg:grid-cols-2 gap-8 items-center py-12">
           <div className="space-y-6">
             <h1 className="text-4xl lg:text-5xl font-bold text-[#1B1B0C] leading-tight">
               Uniformes corporativos de alta durabilidade e qualidade.
@@ -30,10 +31,13 @@ const Hero = () => {
             <img 
               src="/lovable-uploads/525fb8fe-e0b1-44bd-b579-5eaadae77deb.png" 
               alt="Uniformes Profissionais" 
-              className="w-full h-auto rounded-2xl shadow-xl"
+              className="w-full h-auto"
             />
           </div>
         </div>
+
+        {/* Client Logos moved here */}
+        <ClientLogos />
       </div>
       
       <div className="bg-white py-16">

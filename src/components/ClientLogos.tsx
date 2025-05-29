@@ -3,35 +3,33 @@ import React from 'react';
 
 const ClientLogos = () => {
   const clients = [
-    { src: "/lovable-uploads/6eea3808-94c5-49cf-ad90-4a3c089bd34c.png", alt: "Cliente 1" },
-    { src: "/lovable-uploads/9bc7fe96-eaa0-4479-bea1-35d9e573c7f9.png", alt: "Cliente 2" },
-    { src: "/lovable-uploads/12884885-02de-450b-9ad1-610077e721ea.png", alt: "Cliente 3" },
-    { src: "/lovable-uploads/fd84a10e-de84-425f-a262-0f418492b22c.png", alt: "Cliente 4" },
-    { src: "/lovable-uploads/6eea3808-94c5-49cf-ad90-4a3c089bd34c.png", alt: "Cliente 5" },
-    { src: "/lovable-uploads/9bc7fe96-eaa0-4479-bea1-35d9e573c7f9.png", alt: "Cliente 6" }
+    { src: "/lovable-uploads/b1d7426f-07a1-4759-9576-63cba2af27a7.png", alt: "Felice" },
+    { src: "/lovable-uploads/2bf53af5-57c1-48af-b2b9-a6446ae8c6a0.png", alt: "Bunge" },
+    { src: "/lovable-uploads/23bb6955-9be2-4e15-9fbb-5a36f5badf32.png", alt: "Central IT" },
+    { src: "/lovable-uploads/2670d8cf-0345-4a29-8af3-b7ca0180cbac.png", alt: "Intercity Hotels" },
+    { src: "/lovable-uploads/4ed3793c-ab99-4452-8b40-26943aff24ed.png", alt: "Unicred" },
+    { src: "/lovable-uploads/aeeef78c-2260-428c-a59e-76329d5594cb.png", alt: "Iochpe-Maxion" }
   ];
 
   // Duplicamos o array para criar o efeito de loop infinito
   const duplicatedClients = [...clients, ...clients];
 
   return (
-    <section className="py-12 bg-gray-50 font-inter overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="relative">
-          <div className="flex animate-scroll-infinite">
-            {duplicatedClients.map((client, index) => (
-              <div key={index} className="flex-shrink-0 mx-8">
-                <img 
-                  src={client.src} 
-                  alt={client.alt} 
-                  className="h-16 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
-                />
-              </div>
-            ))}
-          </div>
+    <div className="py-12 overflow-hidden">
+      <div className="relative">
+        <div className="flex animate-scroll-infinite">
+          {duplicatedClients.map((client, index) => (
+            <div key={index} className="flex-shrink-0 mx-8">
+              <img 
+                src={client.src} 
+                alt={client.alt} 
+                className="h-16 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
+              />
+            </div>
+          ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
