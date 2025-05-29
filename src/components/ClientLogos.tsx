@@ -11,9 +11,13 @@ const ClientLogos = () => {
     { src: "/lovable-uploads/aeeef78c-2260-428c-a59e-76329d5594cb.png", alt: "Iochpe-Maxion" }
   ];
 
+  // Duplicate the clients array for infinite scroll effect
+  const duplicatedClients = [...clients, ...clients];
+
   return (
     <div className="py-6">
-      <div className="flex justify-center items-center gap-12 flex-wrap">
+      {/* Desktop version */}
+      <div className="hidden md:flex justify-center items-center gap-12 flex-wrap">
         {clients.map((client, index) => (
           <div key={index} className="flex-shrink-0">
             <img 
@@ -23,6 +27,21 @@ const ClientLogos = () => {
             />
           </div>
         ))}
+      </div>
+
+      {/* Mobile version - infinite scroll */}
+      <div className="md:hidden overflow-hidden">
+        <div className="flex animate-scroll-infinite gap-8">
+          {duplicatedClients.map((client, index) => (
+            <div key={index} className="flex-shrink-0">
+              <img 
+                src={client.src} 
+                alt={client.alt} 
+                className="h-16 w-auto opacity-70 grayscale"
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

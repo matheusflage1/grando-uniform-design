@@ -32,8 +32,8 @@ const ContactForm = () => {
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 items-stretch">
-            {/* Image on the left */}
-            <div className="flex items-center justify-center">
+            {/* Image on the left - hidden on mobile */}
+            <div className="hidden lg:flex items-center justify-center">
               <img 
                 src="/lovable-uploads/268ceba1-90e4-459f-ae83-17ddbb9dcd91.png" 
                 alt="Profissionais usando uniformes corporativos" 
@@ -41,12 +41,12 @@ const ContactForm = () => {
               />
             </div>
             
-            {/* Form on the right */}
-            <div className="bg-white p-8 rounded-xl shadow-sm text-center h-full flex flex-col justify-center">
+            {/* Form on the right - full width on mobile */}
+            <div className="bg-white p-8 rounded-xl shadow-sm text-center h-full flex flex-col justify-center lg:col-span-1 col-span-full">
               <img 
                 src="/lovable-uploads/4376058e-6435-4383-808e-6c861f93344c.png" 
                 alt="Natalia Grando Logo" 
-                className="h-28 mx-auto mb-8"
+                className="h-28 mx-auto lg:mx-auto mx-0 mb-8"
               />
               <h2 className="text-3xl font-bold text-[#1B1B0C] mb-4">
                 Fale conosco
