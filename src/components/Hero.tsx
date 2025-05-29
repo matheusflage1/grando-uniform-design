@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <section className="pt-32 bg-[#ECE08A] font-inter">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-8 items-center pb-8">
+        <div className="grid lg:grid-cols-2 gap-8 items-center pb-0">
           <div className="space-y-6">
             <h1 className="text-4xl lg:text-5xl font-bold text-[#1B1B0C] leading-tight">
               Uniformes corporativos de alta durabilidade e qualidade.
