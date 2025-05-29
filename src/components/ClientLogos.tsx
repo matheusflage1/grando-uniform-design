@@ -11,23 +11,18 @@ const ClientLogos = () => {
     { src: "/lovable-uploads/aeeef78c-2260-428c-a59e-76329d5594cb.png", alt: "Iochpe-Maxion" }
   ];
 
-  // Duplicamos o array para criar o efeito de loop infinito
-  const duplicatedClients = [...clients, ...clients];
-
   return (
-    <div className="py-12 overflow-hidden">
-      <div className="relative">
-        <div className="flex animate-scroll-infinite">
-          {duplicatedClients.map((client, index) => (
-            <div key={index} className="flex-shrink-0 mx-8">
-              <img 
-                src={client.src} 
-                alt={client.alt} 
-                className="h-16 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
-              />
-            </div>
-          ))}
-        </div>
+    <div className="py-12">
+      <div className="flex justify-center items-center gap-8 flex-wrap">
+        {clients.map((client, index) => (
+          <div key={index} className="flex-shrink-0">
+            <img 
+              src={client.src} 
+              alt={client.alt} 
+              className="h-16 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
