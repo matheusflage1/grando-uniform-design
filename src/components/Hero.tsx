@@ -9,7 +9,7 @@ const Hero = () => {
   return (
     <section className="pt-32 bg-[#ECE08A] font-inter">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-8 items-center pb-0">
+        <div className="grid lg:grid-cols-2 gap-8 items-center pb-8">
           <div className="space-y-6">
             <h1 className="text-4xl lg:text-5xl font-bold text-[#1B1B0C] leading-tight">
               Uniformes corporativos de alta durabilidade e qualidade.
@@ -38,11 +38,11 @@ const Hero = () => {
       </div>
 
       {/* Client Logos full width without spacing */}
-      <div className="bg-white py-8 w-full">
+      <div className="bg-white py-4 w-full">
         <ClientLogos />
       </div>
       
-      <div className="bg-white py-16">
+      <div className="bg-white py-8">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-6">

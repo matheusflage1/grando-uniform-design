@@ -12,14 +12,14 @@ const ClientLogos = () => {
   ];
 
   return (
-    <div className="py-12">
-      <div className="flex justify-center items-center gap-8 flex-wrap">
+    <div className="py-6">
+      <div className="flex justify-center items-center gap-12 flex-wrap">
         {clients.map((client, index) => (
           <div key={index} className="flex-shrink-0">
             <img 
               src={client.src} 
               alt={client.alt} 
-              className="h-16 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
+              className="h-24 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
             />
           </div>
         ))}
