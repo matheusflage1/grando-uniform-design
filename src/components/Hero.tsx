@@ -31,18 +31,18 @@ const Hero = () => {
             <img 
               src="/lovable-uploads/a27bd5ee-7287-44ca-9ce0-bdfee26a5a1b.png" 
               alt="Uniformes Profissionais" 
-              className="w-4/5 h-auto"
+              className="w-full h-auto"
             />
           </div>
         </div>
       </div>
 
       {/* Client Logos full width without spacing */}
-      <div className="bg-white py-2 w-full">
+      <div className="bg-white py-4 w-full">
         <ClientLogos />
       </div>
       
-      <div className="bg-white py-4">
+      <div className="bg-white py-8">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-6">
