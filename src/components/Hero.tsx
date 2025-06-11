@@ -29,8 +29,8 @@ const Hero = () => {
           </div>
           <div className="flex justify-center">
             <img 
-              src="/lovable-uploads/a27bd5ee-7287-44ca-9ce0-bdfee26a5a1b.png" 
-              alt="Uniformes Profissionais" 
+              src="/lovable-uploads/e978153f-3136-45f9-98ad-4f6ad0dc4617.png" 
+              alt="Casal usando uniformes corporativos" 
               className="w-4/5 h-auto"
             />
           </div>

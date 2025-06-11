@@ -35,8 +35,8 @@ const ContactForm = () => {
             {/* Image on the left - hidden on mobile */}
             <div className="hidden lg:flex items-center justify-center">
               <img 
-                src="/lovable-uploads/268ceba1-90e4-459f-ae83-17ddbb9dcd91.png" 
-                alt="Profissionais usando uniformes corporativos" 
+                src="/lovable-uploads/a27bd5ee-7287-44ca-9ce0-bdfee26a5a1b.png" 
+                alt="Uniformes Profissionais" 
                 className="w-full h-full object-cover rounded-xl"
               />
             </div>
