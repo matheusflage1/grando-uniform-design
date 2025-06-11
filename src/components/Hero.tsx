@@ -29,7 +29,7 @@ const Hero = () => {
           </div>
           <div className="flex justify-center">
             <img 
-              src="/lovable-uploads/e978153f-3136-45f9-98ad-4f6ad0dc4617.png" 
+              src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" 
               alt="Casal usando uniformes corporativos" 
               className="w-4/5 h-auto"
             />
