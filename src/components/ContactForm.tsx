@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -152,7 +151,7 @@ const ContactForm = () => {
               <div className="relative">
                 <div className="absolute -bottom-4 -right-4 w-full h-full bg-[#62624C]/10 rounded-2xl blur-sm"></div>
                 <img 
-                  src="/lovable-uploads/e978153f-3136-45f9-98ad-4f6ad0dc4617.png" 
+                  src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" 
                   alt="Uniformes Profissionais" 
                   className="w-full h-80 object-cover rounded-2xl shadow-xl relative z-10"
                 />

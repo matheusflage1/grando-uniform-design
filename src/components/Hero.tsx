@@ -8,7 +8,7 @@ const Hero = () => {
   const whatsappLink = "https://api.whatsapp.com/send/?phone=555433831351&text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa&type=phone_number&app_absent=0";
 
   return (
-    <section className="pt-32 bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] font-inter relative overflow-hidden">
+    <section className="pt-8 bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] font-inter relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#62624C]/10 rounded-full blur-2xl"></div>
@@ -38,11 +38,11 @@ const Hero = () => {
               <div className="flex flex-col sm:flex-row gap-3 text-sm">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="text-[#1B1B0C]/80">Entrega garantida em 45 dias</span>
+                  <span className="text-[#1B1B0C]/80">Entrega média em 45 dias</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="text-[#1B1B0C]/80">Sem pegadinhas no preço</span>
+                  <span className="text-[#1B1B0C]/80">Mínimo de 60 peças</span>
                 </div>
               </div>
             </div>
@@ -59,21 +59,17 @@ const Hero = () => {
           </div>
           
           <div className="flex justify-center relative">
-            <div className="relative">
-              {/* Decorative shadow */}
-              <div className="absolute -bottom-4 -right-4 w-full h-full bg-[#62624C]/20 rounded-2xl blur-sm"></div>
-              <img 
-                src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" 
-                alt="Casal usando uniformes corporativos" 
-                className="w-4/5 h-auto relative z-10 rounded-2xl shadow-xl"
-              />
-            </div>
+            <img 
+              src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" 
+              alt="Casal usando uniformes corporativos" 
+              className="w-4/5 h-auto rounded-2xl shadow-xl"
+            />
           </div>
         </div>
       </div>
 
-      {/* Client Logos with enhanced styling */}
-      <div className="bg-white/80 backdrop-blur-sm py-4 w-full border-t border-white/30">
+      {/* Client Logos with white background */}
+      <div className="bg-white py-4 w-full border-t border-gray-200">
         <div className="text-center mb-2">
           <p className="text-sm font-medium text-[#1B1B0C]/70">Empresas que confiam em nosso trabalho</p>
         </div>
