@@ -62,7 +62,7 @@ const Hero = () => {
             <img 
               src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" 
               alt="Casal usando uniformes corporativos" 
-              className="w-4/5 h-auto shadow-xl"
+              className="w-4/5 h-auto"
             />
           </div>
         </div>

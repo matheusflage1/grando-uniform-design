@@ -150,11 +150,10 @@ const ContactForm = () => {
             <div className="space-y-8">
               {/* Image */}
               <div className="relative">
-                <div className="absolute -bottom-4 -right-4 w-full h-full bg-[#62624C]/10 rounded-2xl blur-sm"></div>
                 <img 
                   src="/lovable-uploads/50adb655-c7ac-4ff0-a696-c1494c8f8401.png" 
                   alt="Uniformes Profissionais" 
-                  className="w-full h-80 object-cover rounded-2xl shadow-xl relative z-10"
+                  className="w-full h-80 object-cover"
                 />
               </div>
 
