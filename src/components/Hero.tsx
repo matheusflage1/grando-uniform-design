@@ -1,14 +1,10 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import ClientLogos from './ClientLogos';
 import { CheckCircle, Star } from 'lucide-react';
-
 const Hero = () => {
   const whatsappLink = "https://api.whatsapp.com/send/?phone=555433831351&text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa&type=phone_number&app_absent=0";
-
-  return (
-    <section className="pt-8 bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] font-inter relative overflow-hidden">
+  return <section className="pt-8 bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] font-inter relative overflow-hidden py-0">
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#62624C]/10 rounded-full blur-2xl"></div>
@@ -19,9 +15,7 @@ const Hero = () => {
             {/* Trust indicators */}
             <div className="flex items-center gap-4 mb-4">
               <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                ))}
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
               </div>
               <span className="text-sm font-medium text-[#1B1B0C]/80">+500 empresas atendidas</span>
             </div>
@@ -47,11 +41,7 @@ const Hero = () => {
               </div>
             </div>
 
-            <Button 
-              asChild 
-              size="lg"
-              className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md"
-            >
+            <Button asChild size="lg" className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md">
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 Solicite seu orçamento
               </a>
@@ -59,11 +49,7 @@ const Hero = () => {
           </div>
           
           <div className="flex justify-center relative">
-            <img 
-              src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" 
-              alt="Casal usando uniformes corporativos" 
-              className="w-4/5 h-auto"
-            />
+            <img src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" alt="Casal usando uniformes corporativos" className="w-4/5 h-auto" />
           </div>
         </div>
       </div>
@@ -92,8 +78,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
