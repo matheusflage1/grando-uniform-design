@@ -18,28 +18,15 @@ const ClientLogos = () => {
 
   return (
     <div className="py-6">
-      {/* Desktop version */}
-      <div className="hidden md:flex justify-center items-center gap-12 flex-wrap">
-        {clients.map((client, index) => (
-          <div key={index} className="flex-shrink-0">
-            <img 
-              src={client.src} 
-              alt={client.alt} 
-              className="h-24 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Mobile version - infinite scroll */}
-      <div className="md:hidden overflow-hidden">
-        <div className="flex animate-scroll-infinite gap-8">
+      {/* Single line infinite scroll for all screen sizes */}
+      <div className="overflow-hidden">
+        <div className="flex animate-scroll-infinite gap-12">
           {duplicatedClients.map((client, index) => (
             <div key={index} className="flex-shrink-0">
               <img 
                 src={client.src} 
                 alt={client.alt} 
-                className="h-16 w-auto opacity-70 grayscale"
+                className="h-20 w-auto opacity-70 grayscale hover:grayscale-0 transition-all duration-300"
               />
             </div>
           ))}
