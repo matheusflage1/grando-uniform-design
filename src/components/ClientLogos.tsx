@@ -20,7 +20,7 @@ const ClientLogos = () => {
     <div className="py-6">
       {/* Single line infinite scroll for all screen sizes */}
       <div className="overflow-hidden">
-        <div className="flex animate-scroll-infinite gap-12">
+        <div className="flex animate-scroll-infinite md:animate-scroll-infinite lg:animate-scroll-infinite animate-scroll-infinite-mobile gap-12">
           {duplicatedClients.map((client, index) => (
             <div key={index} className="flex-shrink-0">
               <img 
