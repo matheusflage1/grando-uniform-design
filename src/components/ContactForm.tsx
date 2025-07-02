@@ -1,10 +1,8 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { MapPin, Phone, Mail, CheckCircle } from 'lucide-react';
-
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     nome: '',
@@ -13,30 +11,26 @@ const ContactForm = () => {
     funcionarios: '',
     estado: ''
   });
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     toast.success('Formulário enviado com sucesso! Entraremos em contato em breve.');
-    setFormData({ nome: '', email: '', telefone: '', funcionarios: '', estado: '' });
+    setFormData({
+      nome: '',
+      email: '',
+      telefone: '',
+      funcionarios: '',
+      estado: ''
+    });
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
-
-  const benefits = [
-    "Orçamento sem compromisso",
-    "Atendimento personalizado",
-    "Resposta em até 24h",
-    "Consultoria gratuita"
-  ];
-
-  return (
-    <section className="py-16 bg-gradient-to-b from-gray-50 to-white font-inter relative overflow-hidden">
+  const benefits = ["Orçamento sem compromisso", "Atendimento personalizado", "Resposta em até 24h", "Consultoria gratuita"];
+  return <section className="py-16 bg-gradient-to-b from-gray-50 to-white font-inter relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-72 h-72 bg-[#ECE08A]/10 rounded-full blur-3xl -translate-x-36 -translate-y-36"></div>
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#62624C]/5 rounded-full blur-3xl translate-x-32 translate-y-32"></div>
@@ -64,11 +58,7 @@ const ContactForm = () => {
               <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#62624C] to-[#ECE08A]"></div>
               
               <div className="text-center mb-8">
-                <img 
-                  src="/lovable-uploads/4376058e-6435-4383-808e-6c861f93344c.png" 
-                  alt="Natalia Grando Logo" 
-                  className="h-28 mx-auto mb-6"
-                />
+                <img src="/lovable-uploads/4376058e-6435-4383-808e-6c861f93344c.png" alt="Natalia Grando Logo" className="h-28 mx-auto mb-6" />
                 <h3 className="text-2xl font-bold text-[#1B1B0C] mb-2">
                   Solicite seu orçamento
                 </h3>
@@ -78,56 +68,13 @@ const ContactForm = () => {
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-4">
-                <Input
-                  type="text"
-                  name="nome"
-                  placeholder="Nome completo"
-                  value={formData.nome}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all"
-                />
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="E-mail corporativo"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all"
-                />
-                <Input
-                  type="tel"
-                  name="telefone"
-                  placeholder="Telefone / WhatsApp"
-                  value={formData.telefone}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all"
-                />
-                <Input
-                  type="text"
-                  name="funcionarios"
-                  placeholder="Número de funcionários"
-                  value={formData.funcionarios}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all"
-                />
-                <Input
-                  type="text"
-                  name="estado"
-                  placeholder="Estado da empresa"
-                  value={formData.estado}
-                  onChange={handleChange}
-                  required
-                  className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all"
-                />
+                <Input type="text" name="nome" placeholder="Nome completo" value={formData.nome} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
+                <Input type="email" name="email" placeholder="E-mail corporativo" value={formData.email} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
+                <Input type="tel" name="telefone" placeholder="Telefone / WhatsApp" value={formData.telefone} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
+                <Input type="text" name="funcionarios" placeholder="Número de funcionários" value={formData.funcionarios} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
+                <Input type="text" name="estado" placeholder="Estado da empresa" value={formData.estado} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
                 
-                <Button 
-                  type="submit"
-                  className="w-full bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold py-4 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                >
+                <Button type="submit" className="w-full bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold py-4 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   Enviar solicitação
                 </Button>
               </form>
@@ -136,12 +83,10 @@ const ContactForm = () => {
               <div className="mt-6 pt-6 border-t border-gray-100">
                 <h4 className="font-semibold text-[#1B1B0C] mb-3 text-center">O que você ganha:</h4>
                 <div className="grid grid-cols-2 gap-2">
-                  {benefits.map((benefit, index) => (
-                    <div key={index} className="flex items-center gap-2">
+                  {benefits.map((benefit, index) => <div key={index} className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                       <span className="text-sm text-gray-600">{benefit}</span>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </div>
             </div>
@@ -150,11 +95,7 @@ const ContactForm = () => {
             <div className="space-y-8">
               {/* Image */}
               <div className="relative">
-                <img 
-                  src="/lovable-uploads/50adb655-c7ac-4ff0-a696-c1494c8f8401.png" 
-                  alt="Uniformes Profissionais" 
-                  className="w-full h-80 object-cover"
-                />
+                <img src="/lovable-uploads/50adb655-c7ac-4ff0-a696-c1494c8f8401.png" alt="Uniformes Profissionais" className="w-full h-80 object-cover" />
               </div>
 
               {/* Contact information */}
@@ -168,7 +109,7 @@ const ContactForm = () => {
                     </div>
                     <div>
                       <p className="font-medium text-[#1B1B0C]">WhatsApp</p>
-                      <p className="text-sm text-gray-600">(55) 5433-831351</p>
+                      <p className="text-sm text-gray-600">(54) 3383-1351</p>
                     </div>
                   </div>
                   
@@ -197,8 +138,6 @@ const ContactForm = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ContactForm;
