@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { MapPin, Phone, Mail, CheckCircle, MessageCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -15,19 +16,36 @@ const ContactForm = () => {
   });
   
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    toast.success('Formulário enviado com sucesso! Entraremos em contato em breve.');
-    setFormData({
-      nome: '',
-      email: '',
-      telefone: '',
-      funcionarios: '',
-      estado: ''
-    });
-    setShowSuccessDialog(true);
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success('Formulário enviado com sucesso! Entraremos em contato em breve.');
+      setFormData({
+        nome: '',
+        email: '',
+        telefone: '',
+        funcionarios: '',
+        estado: ''
+      });
+      setShowSuccessDialog(true);
+    } catch (error: any) {
+      console.error('Error submitting form:', error);
+      toast.error('Erro ao enviar formulário. Tente novamente.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,8 +103,12 @@ const ContactForm = () => {
                   <Input type="text" name="funcionarios" placeholder="Número de funcionários" value={formData.funcionarios} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
                   <Input type="text" name="estado" placeholder="Estado da empresa" value={formData.estado} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
                   
-                  <Button type="submit" className="w-full bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold py-4 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                    Enviar solicitação
+                  <Button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="w-full bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold py-4 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? 'Enviando...' : 'Enviar solicitação'}
                   </Button>
                 </form>
 
