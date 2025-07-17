@@ -102,9 +102,36 @@ export type Database = {
         Relationships: []
       }
       natalia: {
-        Row: {}
-        Insert: {}
-        Update: {}
+        Row: {
+          created_at: string
+          email: string
+          estado: string
+          funcionarios: string
+          id: string
+          nome: string
+          telefone: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          estado: string
+          funcionarios: string
+          id?: string
+          nome: string
+          telefone: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          estado?: string
+          funcionarios?: string
+          id?: string
+          nome?: string
+          telefone?: string
+          updated_at?: string
+        }
         Relationships: []
       }
       profiles: {
