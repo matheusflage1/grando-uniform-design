@@ -27,7 +27,10 @@ const handler = async (req: Request): Promise<Response> => {
     const rawData: ContactFormData = await req.json();
     
     // Sanitize input data to prevent XSS
-    const sanitizeInput = (input: string): string => {
+    const sanitizeInput = (input: string | undefined | null): string => {
+      if (!input || typeof input !== 'string') {
+        return '';
+      }
       return input
         .replace(/[<>'"&]/g, (match) => {
           const htmlEntities: { [key: string]: string } = {
