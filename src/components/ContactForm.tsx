@@ -6,6 +6,12 @@ import { MapPin, Phone, Mail, CheckCircle, MessageCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
 
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     nome: '',
@@ -29,6 +35,11 @@ const ContactForm = () => {
 
       if (error) {
         throw error;
+      }
+
+      // Track conversion
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('event', 'conversion', {'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'});
       }
 
       toast.success('Formulário enviado com sucesso! Entraremos em contato em breve.');
@@ -191,7 +202,16 @@ const ContactForm = () => {
               asChild 
               className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-all duration-300"
             >
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              <a 
+                href={whatsappLink} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={() => {
+                  if (typeof window.gtag !== 'undefined') {
+                    window.gtag('event', 'conversion', {'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'});
+                  }
+                }}
+              >
                 <MessageCircle className="w-5 h-5 mr-2" />
                 Falar no WhatsApp agora
               </a>

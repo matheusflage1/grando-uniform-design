@@ -2,6 +2,12 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import ClientLogos from './ClientLogos';
 import { CheckCircle, Star } from 'lucide-react';
+
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
 const Hero = () => {
   const whatsappLink = "https://api.whatsapp.com/send/?phone=555433831351&text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa&type=phone_number&app_absent=0";
   return <section className="pt-8 bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] font-inter relative overflow-hidden py-0">
@@ -42,7 +48,16 @@ const Hero = () => {
             </div>
 
             <Button asChild size="lg" className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md">
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              <a 
+                href={whatsappLink} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={() => {
+                  if (typeof window.gtag !== 'undefined') {
+                    window.gtag('event', 'conversion', {'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'});
+                  }
+                }}
+              >
                 Solicite seu orçamento
               </a>
             </Button>
