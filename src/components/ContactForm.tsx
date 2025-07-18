@@ -161,7 +161,7 @@ const ContactForm = () => {
                       </div>
                       <div>
                         <p className="font-medium text-[#1B1B0C]">E-mail</p>
-                        <p className="text-sm text-gray-600">contato@nataliagrando.com.br</p>
+                        <p className="text-sm text-gray-600">comercial@nataliagrando.com.br</p>
                       </div>
                     </div>
                     
