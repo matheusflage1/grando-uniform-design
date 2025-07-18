@@ -24,7 +24,31 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const formData: ContactFormData = await req.json();
+    const rawData: ContactFormData = await req.json();
+    
+    // Sanitize input data to prevent XSS
+    const sanitizeInput = (input: string): string => {
+      return input
+        .replace(/[<>'"&]/g, (match) => {
+          const htmlEntities: { [key: string]: string } = {
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            '&': '&amp;'
+          };
+          return htmlEntities[match] || match;
+        })
+        .trim();
+    };
+
+    const formData: ContactFormData = {
+      nome: sanitizeInput(rawData.nome),
+      email: sanitizeInput(rawData.email),
+      telefone: sanitizeInput(rawData.telefone),
+      funcionarios: sanitizeInput(rawData.funcionarios),
+      estado: sanitizeInput(rawData.estado)
+    };
     
     // Initialize Supabase client
     const supabase = createClient(
