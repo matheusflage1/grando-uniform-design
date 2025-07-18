@@ -69,7 +69,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send email to Natalia
     const emailResponse = await resend.emails.send({
       from: "Formulário Natália Grando <onboarding@resend.dev>",
-      to: ["contato@nataliagrando.com.br"],
+      to: ["comercial@nataliagrando.com.br"],
       subject: "Nova solicitação de orçamento",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
