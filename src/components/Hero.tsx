@@ -27,22 +27,22 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl lg:text-5xl font-bold text-[#1B1B0C] leading-tight">
-              Uniformes corporativos de <span className="text-[#62624C]">alta durabilidade</span> e qualidade.
+              Uniformes profissionais e <span className="text-[#62624C]">fardas de trabalho</span> corporativas de alta durabilidade.
             </h1>
             
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/20 shadow-sm">
               <p className="text-xl text-[#1B1B0C] font-semibold mb-3">
-                Duram até 2x mais que os tradicionais.
+                Confecção de uniformes empresariais que duram até 2x mais que os tradicionais.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 text-sm">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="text-[#1B1B0C]/80">Entrega média em 45 dias</span>
+                  <span className="text-[#1B1B0C]/80">Uniformes personalizados para empresas</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="text-[#1B1B0C]/80">Mínimo de 60 peças</span>
+                  <span className="text-[#1B1B0C]/80">Vestuário de trabalho industrial</span>
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@ const Hero = () => {
           </div>
           
           <div className="flex justify-center relative">
-            <img src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" alt="Casal usando uniformes corporativos" className="w-4/5 h-auto" />
+            <img src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" alt="Uniformes profissionais corporativos - Fardas de trabalho personalizadas para empresas - Natalia Grando Confecções" className="w-4/5 h-auto" />
           </div>
         </div>
       </div>
@@ -82,13 +82,13 @@ const Hero = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-6">
               <span className="animate-text-color">
-                Seus uniformes não precisam ser um problema — precisam ser uma solução.
+                Fábrica de uniformes profissionais — especializada em soluções corporativas personalizadas.
               </span>
             </h2>
             <p className="text-lg text-gray-700 leading-relaxed">
-              Com foco total na escolha de tecidos de alta qualidade e acabamentos impecáveis, 
-              evitamos reposições recorrentes e entregamos uniformes que beneficiam tanto sua 
-              empresa quanto seus colaboradores.
+              Confecções de uniformes empresariais com foco em tecidos de alta qualidade, 
+              fardamento feminino e masculino, uniformes industriais e vestuário de trabalho 
+              que beneficiam tanto sua empresa quanto seus colaboradores.
             </p>
           </div>
         </div>

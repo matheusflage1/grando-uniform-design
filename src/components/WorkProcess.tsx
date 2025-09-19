@@ -16,15 +16,15 @@ const WorkProcess = () => {
     {
       icon: <div className="text-4xl">🧩</div>,
       lucideIcon: <Shield className="w-6 h-6" />,
-      title: "Projeto Sob Medida",
-      description: "Desenvolvemos um projeto com sugestão de modelos, tecidos e orçamento com base nas necessidades da equipe.",
+      title: "Uniformes Sob Medida",
+      description: "Desenvolvemos uniformes profissionais personalizados com sugestão de modelos, tecidos e orçamento com base nas necessidades da equipe.",
       color: "from-blue-500 to-blue-600"
     },
     {
       icon: <div className="text-4xl">📏</div>,
       lucideIcon: <Clock className="w-6 h-6" />,
-      title: "Medição e Aprovação",
-      description: "Facilitamos a medição da equipe e a escolha dos tamanhos para garantir conforto e segurança antes da produção.",
+      title: "Fardamento e Medição",
+      description: "Facilitamos a medição da equipe para fardas de trabalho e uniformes corporativos, garantindo conforto e segurança antes da produção.",
       color: "from-green-500 to-green-600"
     },
     {
@@ -57,10 +57,10 @@ const WorkProcess = () => {
             <div className="w-8 h-1 bg-[#62624C] rounded-full"></div>
           </div>
           <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-4">
-            Como Trabalhamos
+            Processo de Confecção de Uniformes Personalizados
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Um processo transparente e eficiente para garantir os melhores resultados
+            Fábrica de uniformes com processo transparente para uniformes empresariais, fardas de trabalho e vestuário corporativo
           </p>
         </div>
         
@@ -107,13 +107,13 @@ const WorkProcess = () => {
               </div>
               
               <p className="text-lg font-semibold text-[#1B1B0C] mb-2">
-                Pedido mínimo: 60 peças (até 3 modelos diferentes)
+                Uniformes empresariais - Pedido mínimo: 60 peças (até 3 modelos diferentes)
               </p>
               <p className="text-gray-700 mb-2">
-                Ideal para empresas com mais de 10 funcionários
+                Confecção de uniformes profissionais ideal para empresas com mais de 10 funcionários
               </p>
               <p className="text-sm font-bold text-[#1B1B0C] bg-white/50 inline-block px-3 py-1 rounded-full">
-                Prazo de entrega com garantia de cumprimento
+                Fábrica de uniformes com garantia de cumprimento de prazo
               </p>
             </div>
             

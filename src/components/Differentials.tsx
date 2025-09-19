@@ -5,34 +5,34 @@ import { Users, Scissors, Shirt, ShoppingCart, CheckCircle, Package, BarChart3, 
 const Differentials = () => {
   const differentials = [
     {
-      title: "Qualidade Premium",
-      subtitle: "Materiais e acabamentos superiores",
+      title: "Uniformes Profissionais Premium",
+      subtitle: "Fardas de trabalho com materiais e acabamentos superiores",
       items: [
-        { icon: <Ruler className="w-4 h-4" />, text: "Grade de tamanhos do 34 ao 62" },
-        { icon: <Scissors className="w-4 h-4" />, text: "Costuras premium que não desfiam" },
-        { icon: <Shirt className="w-4 h-4" />, text: "Tecidos de alta qualidade" }
+        { icon: <Ruler className="w-4 h-4" />, text: "Uniformes personalizados - Grade de tamanhos do 34 ao 62" },
+        { icon: <Scissors className="w-4 h-4" />, text: "Fardamento com costuras premium que não desfiam" },
+        { icon: <Shirt className="w-4 h-4" />, text: "Vestuário de trabalho com tecidos de alta qualidade" }
       ],
       gradient: "from-blue-500 to-blue-600",
       bgColor: "bg-blue-50"
     },
     {
-      title: "Processo Facilitado",
-      subtitle: "Experiência simplificada do início ao fim",
+      title: "Confecção Simplificada",
+      subtitle: "Uniformes empresariais com processo facilitado do início ao fim",
       items: [
-        { icon: <ShoppingCart className="w-4 h-4" />, text: "Loja virtual para pedidos" },
-        { icon: <CheckCircle className="w-4 h-4" />, text: "Aprovação de peças piloto (físicas ou digitais)" },
-        { icon: <Package className="w-4 h-4" />, text: "Entrega por kits personalizados por colaborador" }
+        { icon: <ShoppingCart className="w-4 h-4" />, text: "Loja virtual para uniformes online" },
+        { icon: <CheckCircle className="w-4 h-4" />, text: "Aprovação de uniformes corporativos (físicas ou digitais)" },
+        { icon: <Package className="w-4 h-4" />, text: "Fardas de trabalho entregues por kits personalizados" }
       ],
       gradient: "from-green-500 to-green-600",
       bgColor: "bg-green-50"
     },
     {
-      title: "Pós-venda",
-      subtitle: "Suporte contínuo e relatórios completos",
+      title: "Suporte para Uniformes",
+      subtitle: "Pós-venda completo para uniformes industriais e corporativos",
       items: [
-        { icon: <BarChart3 className="w-4 h-4" />, text: "Relatórios gerenciais dos pedidos" },
-        { icon: <Users className="w-4 h-4" />, text: "Consultoria para medição da equipe" },
-        { icon: <RotateCcw className="w-4 h-4" />, text: "Reposição facilitada" }
+        { icon: <BarChart3 className="w-4 h-4" />, text: "Relatórios gerenciais de uniformes empresariais" },
+        { icon: <Users className="w-4 h-4" />, text: "Consultoria para medição de fardamento feminino e masculino" },
+        { icon: <RotateCcw className="w-4 h-4" />, text: "Reposição de uniformes profissionais facilitada" }
       ],
       gradient: "from-purple-500 to-purple-600",
       bgColor: "bg-purple-50"
@@ -53,10 +53,10 @@ const Differentials = () => {
           </div>
           
           <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-4">
-            Por que escolher a Natalia Grando?
+            Diferenciais da Nossa Confecção de Uniformes
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Combinamos qualidade premium, processo simplificado e suporte completo
+            Fábrica especializada em uniformes profissionais, fardas de trabalho e vestuário corporativo personalizado
           </p>
         </div>
         
@@ -103,19 +103,19 @@ const Differentials = () => {
             <div className="flex justify-center items-center gap-8 flex-wrap">
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#62624C]">+500</div>
-                <div className="text-sm text-gray-600">Empresas atendidas</div>
+                <div className="text-sm text-gray-600">Empresas com uniformes</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#62624C]">45 dias</div>
-                <div className="text-sm text-gray-600">Prazo de entrega</div>
+                <div className="text-sm text-gray-600">Confecção de uniformes</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#62624C]">2x</div>
-                <div className="text-sm text-gray-600">Mais durabilidade</div>
+                <div className="text-sm text-gray-600">Mais durabilidade fardas</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-[#62624C]">100%</div>
-                <div className="text-sm text-gray-600">Satisfação garantida</div>
+                <div className="text-sm text-gray-600">Uniformes garantidos</div>
               </div>
             </div>
           </div>
