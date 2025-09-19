@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import ClientLogos from './ClientLogos';
 import { CheckCircle, Star } from 'lucide-react';
-
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
@@ -38,7 +37,7 @@ const Hero = () => {
               <div className="flex flex-col sm:flex-row gap-3 text-sm">
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="text-[#1B1B0C]/80">Uniformes personalizados para empresas</span>
+                  <span className="text-[#1B1B0C]/80 text-sm">Uniformes personalizados para empresas</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-600" />
@@ -48,16 +47,13 @@ const Hero = () => {
             </div>
 
             <Button asChild size="lg" className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md">
-              <a 
-                href={whatsappLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={() => {
-                  if (typeof window.gtag !== 'undefined') {
-                    window.gtag('event', 'conversion', {'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'});
-                  }
-                }}
-              >
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" onClick={() => {
+              if (typeof window.gtag !== 'undefined') {
+                window.gtag('event', 'conversion', {
+                  'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'
+                });
+              }
+            }}>
                 Solicite seu orçamento
               </a>
             </Button>
