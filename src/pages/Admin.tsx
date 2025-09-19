@@ -227,7 +227,7 @@ const Admin = () => {
                       className="border-[#62624C] text-[#62624C] hover:bg-[#62624C] hover:text-white"
                     >
                       <a 
-                        href={`https://wa.me/55${contact.telefone.replace(/\D/g, '')}?text=Olá+${contact.nome.replace(/\s/g, '+')}%2C+recebi+sua+solicitação+de+orçamento+para+${contact.funcionarios}+funcionários.+Vamos+conversar%3F`}
+                        href={`https://wa.me/55${contact.telefone.replace(/\D/g, '')}?text=Olá%20${contact.nome.replace(/\s/g, '%20')}%2C%20recebi%20sua%20solicitação%20de%20orçamento%20para%20${contact.funcionarios}%20funcionários.%20Vamos%20conversar%3F`}
                         target="_blank" 
                         rel="noopener noreferrer"
                       >

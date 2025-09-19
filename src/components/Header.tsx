@@ -14,7 +14,7 @@ const Header = () => {
     isAdmin,
     signOut
   } = useAuth();
-  const whatsappLink = "https://wa.me/555433831351?text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa";
+  const whatsappLink = "https://wa.me/555433831351?text=Quero%20fazer%20or%C3%A7amento%20de%20uniformes%20corporativos%20para%20minha%20empresa";
   const handleSignOut = async () => {
     await signOut();
   };
