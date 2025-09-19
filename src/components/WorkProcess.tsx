@@ -10,7 +10,7 @@ declare global {
 }
 
 const WorkProcess = () => {
-  const whatsappLink = "https://api.whatsapp.com/send/?phone=555433831351&text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa&type=phone_number&app_absent=0";
+  const whatsappLink = "https://wa.me/555433831351?text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa";
 
   const steps = [
     {

@@ -227,7 +227,7 @@ const Admin = () => {
                       className="border-[#62624C] text-[#62624C] hover:bg-[#62624C] hover:text-white"
                     >
                       <a 
-                        href={`https://api.whatsapp.com/send/?phone=55${contact.telefone.replace(/\D/g, '')}&text=Olá+${contact.nome.replace(/\s/g, '+')}%2C+recebi+sua+solicitação+de+orçamento+para+${contact.funcionarios}+funcionários.+Vamos+conversar%3F`}
+                        href={`https://wa.me/55${contact.telefone.replace(/\D/g, '')}?text=Olá+${contact.nome.replace(/\s/g, '+')}%2C+recebi+sua+solicitação+de+orçamento+para+${contact.funcionarios}+funcionários.+Vamos+conversar%3F`}
                         target="_blank" 
                         rel="noopener noreferrer"
                       >

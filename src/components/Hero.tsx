@@ -8,7 +8,7 @@ declare global {
   }
 }
 const Hero = () => {
-  const whatsappLink = "https://api.whatsapp.com/send/?phone=555433831351&text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa&type=phone_number&app_absent=0";
+  const whatsappLink = "https://wa.me/555433831351?text=Quero+fazer+or%C3%A7amento+de+uniformes+corporativos+para+minha+empresa";
   return <section className="pt-8 bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] font-inter relative overflow-hidden py-0">
       {/* Background decorative elements */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
