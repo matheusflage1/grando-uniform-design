@@ -27,7 +27,7 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl lg:text-5xl font-bold text-[#1B1B0C] leading-tight">
-              Uniformes profissionais e <span className="text-[#62624C]">fardas de trabalho</span> corporativas de alta durabilidade.
+              Uniformes corporativos de <span className="text-[#62624C]">alta durabilidade</span> e qualidade.
             </h1>
             
             <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/20 shadow-sm">
