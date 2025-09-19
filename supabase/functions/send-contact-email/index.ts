@@ -33,9 +33,16 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     // Get client IP address for rate limiting
-    const clientIP = req.headers.get('x-forwarded-for') || 
-                    req.headers.get('x-real-ip') || 
-                    '127.0.0.1';
+    const getClientIP = () => {
+      const xForwardedFor = req.headers.get('x-forwarded-for');
+      if (xForwardedFor) {
+        // Take the first IP from the comma-separated list
+        return xForwardedFor.split(',')[0].trim();
+      }
+      return req.headers.get('x-real-ip') || '127.0.0.1';
+    };
+    
+    const clientIP = getClientIP();
 
     const rawData: ContactFormData = await req.json();
     console.log('Received data for processing');
