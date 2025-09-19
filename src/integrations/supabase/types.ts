@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      contact_form_submissions: {
+        Row: {
+          email: string
+          id: string
+          ip_address: unknown
+          submitted_at: string
+        }
+        Insert: {
+          email: string
+          id?: string
+          ip_address: unknown
+          submitted_at?: string
+        }
+        Update: {
+          email?: string
+          id?: string
+          ip_address?: unknown
+          submitted_at?: string
+        }
+        Relationships: []
+      }
       facebook_ad_accounts: {
         Row: {
           access_token: string
@@ -187,9 +208,35 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      assign_user_role: {
+        Args: {
+          target_role: Database["public"]["Enums"]["app_role"]
+          target_user_id: string
+        }
+        Returns: undefined
+      }
+      check_contact_form_rate_limit: {
+        Args: { client_email: string; client_ip: unknown }
+        Returns: boolean
+      }
+      create_initial_admin: {
+        Args: { admin_email: string }
+        Returns: undefined
+      }
       is_admin: {
         Args: { user_id?: string }
         Returns: boolean
+      }
+      log_contact_submission: {
+        Args: { client_email: string; client_ip: unknown }
+        Returns: undefined
+      }
+      revoke_user_role: {
+        Args: {
+          target_role: Database["public"]["Enums"]["app_role"]
+          target_user_id: string
+        }
+        Returns: undefined
       }
     }
     Enums: {
