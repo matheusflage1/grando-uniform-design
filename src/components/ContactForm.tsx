@@ -39,7 +39,15 @@ const ContactForm = () => {
 
       // Track conversion
       if (typeof window.gtag !== 'undefined') {
-        window.gtag('event', 'conversion', {'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'});
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp',
+          'user_data': {
+            'email_address': formData.email.toLowerCase(),
+            'phone_number': formData.telefone,
+            'first_name': formData.nome.split(' ')[0],
+            'last_name': formData.nome.split(' ').slice(1).join(' ') || ''
+          }
+        });
       }
 
       toast.success('Formulário enviado com sucesso! Entraremos em contato em breve.');
