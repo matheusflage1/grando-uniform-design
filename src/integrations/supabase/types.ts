@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          ip_address: unknown | null
+          new_values: Json | null
+          old_values: Json | null
+          record_id: string | null
+          table_name: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          ip_address?: unknown | null
+          new_values?: Json | null
+          old_values?: Json | null
+          record_id?: string | null
+          table_name?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       contact_form_submissions: {
         Row: {
           email: string
@@ -42,6 +81,8 @@ export type Database = {
           account_name: string
           created_at: string
           id: string
+          token_encrypted: boolean | null
+          token_expires_at: string | null
           updated_at: string
           user_id: string
         }
@@ -51,6 +92,8 @@ export type Database = {
           account_name: string
           created_at?: string
           id?: string
+          token_encrypted?: boolean | null
+          token_expires_at?: string | null
           updated_at?: string
           user_id: string
         }
@@ -60,6 +103,8 @@ export type Database = {
           account_name?: string
           created_at?: string
           id?: string
+          token_encrypted?: boolean | null
+          token_expires_at?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -219,9 +264,21 @@ export type Database = {
         Args: { client_email: string; client_ip: unknown }
         Returns: boolean
       }
+      cleanup_old_contact_submissions: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       create_initial_admin: {
         Args: { admin_email: string }
         Returns: undefined
+      }
+      decrypt_access_token: {
+        Args: { encrypted_token: string }
+        Returns: string
+      }
+      encrypt_access_token: {
+        Args: { token: string }
+        Returns: string
       }
       is_admin: {
         Args: { user_id?: string }
