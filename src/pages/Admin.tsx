@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { LogOut, Mail, Phone, Users, MapPin, Calendar } from 'lucide-react';
+import { LogOut, Mail, Phone, Users, MapPin, Calendar, Shield, AlertTriangle } from 'lucide-react';
+import { AuditLogs } from '@/components/admin/AuditLogs';
+import { SecurityAlert } from '@/components/SecurityAlert';
 
 interface ContactSubmission {
   id: string;
@@ -21,6 +24,7 @@ interface ContactSubmission {
 const Admin = () => {
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('contacts');
   const { user, isAdmin, signOut } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -132,115 +136,142 @@ const Admin = () => {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto p-6">
+        {/* Security Alert */}
         <div className="mb-6">
-          <h2 className="text-3xl font-bold text-[#1B1B0C] mb-2">
-            Solicitações de Orçamento
-          </h2>
-          <p className="text-[#62624C]">
-            Total de {contacts.length} solicitações recebidas
-          </p>
+          <SecurityAlert 
+            type="warning" 
+            message="Sistema de segurança ativo: Todas as ações administrativas são monitoradas e registradas nos logs de auditoria." 
+          />
         </div>
 
-        {contacts.length === 0 ? (
-          <Card className="text-center p-8">
-            <CardContent>
-              <Mail className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-              <CardTitle className="text-xl mb-2">Nenhuma solicitação encontrada</CardTitle>
-              <CardDescription>
-                Quando os clientes enviarem solicitações de orçamento, elas aparecerão aqui.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="grid gap-6">
-            {contacts.map((contact) => (
-              <Card key={contact.id} className="shadow-lg hover:shadow-xl transition-shadow">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-xl text-[#1B1B0C]">
-                        {contact.nome}
-                      </CardTitle>
-                      <div className="flex items-center text-sm text-gray-500 mt-1">
-                        <Calendar className="w-4 h-4 mr-1" />
-                        {formatDate(contact.created_at)}
-                      </div>
-                    </div>
-                    <Badge variant="outline" className="border-[#62624C] text-[#62624C]">
-                      {contact.funcionarios} funcionários
-                    </Badge>
-                  </div>
-                </CardHeader>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="contacts" className="flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              Solicitações ({contacts.length})
+            </TabsTrigger>
+            <TabsTrigger value="security" className="flex items-center gap-2">
+              <Shield className="w-4 h-4" />
+              Segurança
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="contacts" className="mt-6">
+            <div className="mb-6">
+              <h2 className="text-3xl font-bold text-[#1B1B0C] mb-2">
+                Solicitações de Orçamento
+              </h2>
+              <p className="text-[#62624C]">
+                Total de {contacts.length} solicitações recebidas
+              </p>
+            </div>
+
+            {contacts.length === 0 ? (
+              <Card className="text-center p-8">
                 <CardContent>
-                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="flex items-center space-x-2">
-                      <Mail className="w-4 h-4 text-[#62624C]" />
-                      <div>
-                        <p className="text-sm font-medium">Email</p>
-                        <p className="text-sm text-gray-600">{contact.email}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-2">
-                      <Phone className="w-4 h-4 text-[#62624C]" />
-                      <div>
-                        <p className="text-sm font-medium">Telefone</p>
-                        <p className="text-sm text-gray-600">{contact.telefone}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-2">
-                      <Users className="w-4 h-4 text-[#62624C]" />
-                      <div>
-                        <p className="text-sm font-medium">Funcionários</p>
-                        <p className="text-sm text-gray-600">{contact.funcionarios}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-2">
-                      <MapPin className="w-4 h-4 text-[#62624C]" />
-                      <div>
-                        <p className="text-sm font-medium">Estado</p>
-                        <p className="text-sm text-gray-600">{contact.estado}</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 flex space-x-2">
-                    <Button 
-                      asChild
-                      className="bg-[#62624C] hover:bg-[#4e4e3c]"
-                    >
-                      <a 
-                        href={`mailto:${contact.email}?subject=Orçamento de Uniformes Corporativos - ${contact.nome}`}
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        <Mail className="w-4 h-4 mr-2" />
-                        Responder por Email
-                      </a>
-                    </Button>
-                    
-                    <Button 
-                      asChild
-                      variant="outline"
-                      className="border-[#62624C] text-[#62624C] hover:bg-[#62624C] hover:text-white"
-                    >
-                      <a 
-                        href={`https://wa.me/55${contact.telefone.replace(/\D/g, '')}?text=Olá%20${contact.nome.replace(/\s/g, '%20')}%2C%20recebi%20sua%20solicitação%20de%20orçamento%20para%20${contact.funcionarios}%20funcionários.%20Vamos%20conversar%3F`}
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                      >
-                        <Phone className="w-4 h-4 mr-2" />
-                        WhatsApp
-                      </a>
-                    </Button>
-                  </div>
+                  <Mail className="w-16 h-16 mx-auto text-gray-400 mb-4" />
+                  <CardTitle className="text-xl mb-2">Nenhuma solicitação encontrada</CardTitle>
+                  <CardDescription>
+                    Quando os clientes enviarem solicitações de orçamento, elas aparecerão aqui.
+                  </CardDescription>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        )}
+            ) : (
+              <div className="grid gap-6">
+                {contacts.map((contact) => (
+                  <Card key={contact.id} className="shadow-lg hover:shadow-xl transition-shadow">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-xl text-[#1B1B0C]">
+                            {contact.nome}
+                          </CardTitle>
+                          <div className="flex items-center text-sm text-gray-500 mt-1">
+                            <Calendar className="w-4 h-4 mr-1" />
+                            {formatDate(contact.created_at)}
+                          </div>
+                        </div>
+                        <Badge variant="outline" className="border-[#62624C] text-[#62624C]">
+                          {contact.funcionarios} funcionários
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div className="flex items-center space-x-2">
+                          <Mail className="w-4 h-4 text-[#62624C]" />
+                          <div>
+                            <p className="text-sm font-medium">Email</p>
+                            <p className="text-sm text-gray-600">{contact.email}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Phone className="w-4 h-4 text-[#62624C]" />
+                          <div>
+                            <p className="text-sm font-medium">Telefone</p>
+                            <p className="text-sm text-gray-600">{contact.telefone}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <Users className="w-4 h-4 text-[#62624C]" />
+                          <div>
+                            <p className="text-sm font-medium">Funcionários</p>
+                            <p className="text-sm text-gray-600">{contact.funcionarios}</p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2">
+                          <MapPin className="w-4 h-4 text-[#62624C]" />
+                          <div>
+                            <p className="text-sm font-medium">Estado</p>
+                            <p className="text-sm text-gray-600">{contact.estado}</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 flex space-x-2">
+                        <Button 
+                          asChild
+                          className="bg-[#62624C] hover:bg-[#4e4e3c]"
+                        >
+                          <a 
+                            href={`mailto:${contact.email}?subject=Orçamento de Uniformes Corporativos - ${contact.nome}`}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                          >
+                            <Mail className="w-4 h-4 mr-2" />
+                            Responder por Email
+                          </a>
+                        </Button>
+                        
+                        <Button 
+                          asChild
+                          variant="outline"
+                          className="border-[#62624C] text-[#62624C] hover:bg-[#62624C] hover:text-white"
+                        >
+                          <a 
+                            href={`https://wa.me/55${contact.telefone.replace(/\D/g, '')}?text=Olá%20${contact.nome.replace(/\s/g, '%20')}%2C%20recebi%20sua%20solicitação%20de%20orçamento%20para%20${contact.funcionarios}%20funcionários.%20Vamos%20conversar%3F`}
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                          >
+                            <Phone className="w-4 h-4 mr-2" />
+                            WhatsApp
+                          </a>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+          
+          <TabsContent value="security" className="mt-6">
+            <AuditLogs />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );

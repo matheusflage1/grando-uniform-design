@@ -5,6 +5,8 @@ import { toast } from 'sonner';
 import { MapPin, Phone, Mail, CheckCircle, MessageCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
+import { useSecurityValidation } from '@/hooks/useSecurityValidation';
+import { SecurityAlert } from '@/components/SecurityAlert';
 
 declare global {
   interface Window {
@@ -13,6 +15,7 @@ declare global {
 }
 
 const ContactForm = () => {
+  const { validateForm } = useSecurityValidation();
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -23,29 +26,43 @@ const ContactForm = () => {
   
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setValidationErrors([]);
+    
+    // Enhanced security validation
+    const validation = validateForm(formData);
+    if (!validation.isValid) {
+      setValidationErrors(validation.errors);
+      toast.error('Por favor, corrija os erros de validação indicados.');
+      setIsSubmitting(false);
+      return;
+    }
     
     try {
+      // Use sanitized data from validation
+      const sanitizedData = validation.sanitized;
+      
       const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: formData
+        body: sanitizedData
       });
 
       if (error) {
         throw error;
       }
 
-      // Track conversion
+      // Track conversion with sanitized data
       if (typeof window.gtag !== 'undefined') {
         window.gtag('event', 'conversion', {
           'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp',
           'user_data': {
-            'email_address': formData.email.toLowerCase(),
-            'phone_number': formData.telefone,
-            'first_name': formData.nome.split(' ')[0],
-            'last_name': formData.nome.split(' ').slice(1).join(' ') || ''
+            'email_address': sanitizedData.email.toLowerCase(),
+            'phone_number': sanitizedData.telefone,
+            'first_name': sanitizedData.nome.split(' ')[0],
+            'last_name': sanitizedData.nome.split(' ').slice(1).join(' ') || ''
           }
         });
       }
@@ -58,6 +75,7 @@ const ContactForm = () => {
         funcionarios: '',
         estado: ''
       });
+      setValidationErrors([]);
       setShowSuccessDialog(true);
     } catch (error: any) {
       console.error('Error submitting form:', error);
@@ -114,6 +132,20 @@ const ContactForm = () => {
                     Preencha os dados e nossa equipe entrará em contato
                   </p>
                 </div>
+                
+                {/* Security validation errors */}
+                {validationErrors.length > 0 && (
+                  <div className="mb-6 space-y-2">
+                    {validationErrors.map((error, index) => (
+                      <SecurityAlert
+                        key={index}
+                        type="error"
+                        message={error}
+                        className="text-sm"
+                      />
+                    ))}
+                  </div>
+                )}
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <Input type="text" name="nome" placeholder="Nome completo" value={formData.nome} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
