@@ -6,6 +6,7 @@ import { LogIn, LogOut, Shield } from 'lucide-react';
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
+    gtag_report_conversion: (url?: string) => boolean;
   }
 }
 const Header = () => {
@@ -41,11 +42,12 @@ const Header = () => {
             </Button>}
           
           <Button asChild className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-6 py-3 rounded-lg transition-colors">
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" onClick={() => {
-            if (typeof window.gtag !== 'undefined') {
-              window.gtag('event', 'conversion', {
-                'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'
-              });
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" onClick={(e) => {
+            e.preventDefault();
+            if (typeof window.gtag_report_conversion !== 'undefined') {
+              window.gtag_report_conversion(whatsappLink);
+            } else {
+              window.open(whatsappLink, '_blank');
             }
           }}>
               Solicitar Orçamento

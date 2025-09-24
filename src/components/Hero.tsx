@@ -5,6 +5,7 @@ import { CheckCircle, Star } from 'lucide-react';
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
+    gtag_report_conversion: (url?: string) => boolean;
   }
 }
 const Hero = () => {
@@ -47,11 +48,12 @@ const Hero = () => {
             </div>
 
             <Button asChild size="lg" className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md">
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" onClick={() => {
-              if (typeof window.gtag !== 'undefined') {
-                window.gtag('event', 'conversion', {
-                  'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'
-                });
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" onClick={(e) => {
+              e.preventDefault();
+              if (typeof window.gtag_report_conversion !== 'undefined') {
+                window.gtag_report_conversion(whatsappLink);
+              } else {
+                window.open(whatsappLink, '_blank');
               }
             }}>
                 Solicite seu orçamento

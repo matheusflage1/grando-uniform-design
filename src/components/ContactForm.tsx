@@ -246,9 +246,12 @@ const ContactForm = () => {
                 href={whatsappLink} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                onClick={() => {
-                  if (typeof window.gtag !== 'undefined') {
-                    window.gtag('event', 'conversion', {'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'});
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (typeof window.gtag_report_conversion !== 'undefined') {
+                    window.gtag_report_conversion(whatsappLink);
+                  } else {
+                    window.open(whatsappLink, '_blank');
                   }
                 }}
               >

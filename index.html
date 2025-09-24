@@ -42,6 +42,20 @@
       gtag('config', 'AW-11200620047', {
         'allow_enhanced_conversions': true
       });
+
+      // Event snippet for Lead conversion
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp',
+            'event_callback': callback
+        });
+        return false;
+      }
     </script>
   </head>
 
