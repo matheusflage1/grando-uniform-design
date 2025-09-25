@@ -44,7 +44,7 @@
       });
 
       // Event snippet for Lead conversion
-      function gtag_report_conversion(url) {
+      function gtag_report_conversion_lead(url) {
         var callback = function () {
           if (typeof(url) != 'undefined') {
             window.location = url;
@@ -52,6 +52,20 @@
         };
         gtag('event', 'conversion', {
             'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp',
+            'event_callback': callback
+        });
+        return false;
+      }
+
+      // Event snippet for Contato conversion
+      function gtag_report_conversion_contact(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-11200620047/EGMBCOaQkqEbEI_M79wp',
             'event_callback': callback
         });
         return false;

@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import ClientLogos from './ClientLogos';
 import { CheckCircle, Star } from 'lucide-react';
+import WhatsAppPopup from './WhatsAppPopup';
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
-    gtag_report_conversion: (url?: string) => boolean;
+    gtag_report_conversion_lead: (url?: string) => boolean;
   }
 }
 const Hero = () => {
+  const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
   const whatsappLink = "https://wa.me/555433831351?text=Quero%20fazer%20or%C3%A7amento%20de%20uniformes%20corporativos%20para%20minha%20empresa";
   return <section className="pt-8 bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] font-inter relative overflow-hidden py-0">
       {/* Background decorative elements */}
@@ -47,17 +49,18 @@ const Hero = () => {
               </div>
             </div>
 
-            <Button asChild size="lg" className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md">
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" onClick={(e) => {
-              e.preventDefault();
-              if (typeof window.gtag_report_conversion !== 'undefined') {
-                window.gtag_report_conversion(whatsappLink);
-              } else {
-                window.open(whatsappLink, '_blank');
-              }
-            }}>
-                Solicite seu orçamento
-              </a>
+            <Button 
+              size="lg" 
+              className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md"
+              onClick={() => {
+                // Enviar conversão de Lead ao abrir popup
+                if (typeof window.gtag_report_conversion_lead !== 'undefined') {
+                  window.gtag_report_conversion_lead();
+                }
+                setShowWhatsAppPopup(true);
+              }}
+            >
+              Solicite seu orçamento
             </Button>
           </div>
           
@@ -91,6 +94,12 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      
+      <WhatsAppPopup
+        isOpen={showWhatsAppPopup}
+        onClose={() => setShowWhatsAppPopup(false)}
+        whatsappLink={whatsappLink}
+      />
     </section>;
 };
 export default Hero;

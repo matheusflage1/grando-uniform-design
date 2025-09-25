@@ -11,6 +11,7 @@ import { SecurityAlert } from '@/components/SecurityAlert';
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
+    gtag_report_conversion_contact: (url?: string) => boolean;
   }
 }
 
@@ -248,8 +249,8 @@ const ContactForm = () => {
                 rel="noopener noreferrer"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (typeof window.gtag_report_conversion !== 'undefined') {
-                    window.gtag_report_conversion(whatsappLink);
+                  if (typeof window.gtag_report_conversion_contact !== 'undefined') {
+                    window.gtag_report_conversion_contact(whatsappLink);
                   } else {
                     window.open(whatsappLink, '_blank');
                   }

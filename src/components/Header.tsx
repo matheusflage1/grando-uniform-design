@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 import { LogIn, LogOut, Shield } from 'lucide-react';
+import WhatsAppPopup from './WhatsAppPopup';
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
-    gtag_report_conversion: (url?: string) => boolean;
+    gtag_report_conversion_lead: (url?: string) => boolean;
   }
 }
 const Header = () => {
@@ -15,6 +16,7 @@ const Header = () => {
     isAdmin,
     signOut
   } = useAuth();
+  const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
   const whatsappLink = "https://wa.me/555433831351?text=Quero%20fazer%20or%C3%A7amento%20de%20uniformes%20corporativos%20para%20minha%20empresa";
   const handleSignOut = async () => {
     await signOut();
@@ -41,20 +43,26 @@ const Header = () => {
               
             </Button>}
           
-          <Button asChild className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-6 py-3 rounded-lg transition-colors">
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" onClick={(e) => {
-            e.preventDefault();
-            if (typeof window.gtag_report_conversion !== 'undefined') {
-              window.gtag_report_conversion(whatsappLink);
-            } else {
-              window.open(whatsappLink, '_blank');
-            }
-          }}>
-              Solicitar Orçamento
-            </a>
+          <Button 
+            className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+            onClick={() => {
+              // Enviar conversão de Lead ao abrir popup
+              if (typeof window.gtag_report_conversion_lead !== 'undefined') {
+                window.gtag_report_conversion_lead();
+              }
+              setShowWhatsAppPopup(true);
+            }}
+          >
+            Solicitar Orçamento
           </Button>
         </div>
       </div>
+      
+      <WhatsAppPopup
+        isOpen={showWhatsAppPopup}
+        onClose={() => setShowWhatsAppPopup(false)}
+        whatsappLink={whatsappLink}
+      />
     </header>;
 };
 export default Header;
