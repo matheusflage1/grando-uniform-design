@@ -1,15 +1,18 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Clock, Shield, Truck, Repeat } from 'lucide-react';
+import WhatsAppPopup from './WhatsAppPopup';
 
 declare global {
   interface Window {
     gtag: (...args: any[]) => void;
+    gtag_report_conversion_lead: (url?: string) => boolean;
   }
 }
 
 const WorkProcess = () => {
+  const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
   const whatsappLink = "https://wa.me/555433831351?text=Quero%20fazer%20or%C3%A7amento%20de%20uniformes%20corporativos%20para%20minha%20empresa";
 
   const steps = [
@@ -118,25 +121,26 @@ const WorkProcess = () => {
             </div>
             
             <Button 
-              asChild 
               className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+              onClick={() => {
+                // Enviar conversão de Lead ao abrir popup
+                if (typeof window.gtag_report_conversion_lead !== 'undefined') {
+                  window.gtag_report_conversion_lead();
+                }
+                setShowWhatsAppPopup(true);
+              }}
             >
-              <a 
-                href={whatsappLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={() => {
-                  if (typeof window.gtag !== 'undefined') {
-                    window.gtag('event', 'conversion', {'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp'});
-                  }
-                }}
-              >
-                FALE COM UM CONSULTOR
-              </a>
+              FALE COM UM CONSULTOR
             </Button>
           </div>
         </div>
       </div>
+      
+      <WhatsAppPopup
+        isOpen={showWhatsAppPopup}
+        onClose={() => setShowWhatsAppPopup(false)}
+        whatsappLink={whatsappLink}
+      />
     </section>
   );
 };

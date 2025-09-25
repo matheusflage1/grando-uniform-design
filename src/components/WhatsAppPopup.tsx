@@ -41,7 +41,7 @@ const WhatsAppPopup = ({ isOpen, onClose, whatsappLink }: WhatsAppPopupProps) =>
 
   const validatePhoneNumber = (phone: string) => {
     const numbers = phone.replace(/\D/g, '');
-    return numbers.length === 11 && numbers.startsWith('11', 0); // Aceita qualquer DDD mas força 11 dígitos
+    return numbers.length === 11; // Aceita qualquer DDD brasileiro com 11 dígitos
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,20 +95,10 @@ const WhatsAppPopup = ({ isOpen, onClose, whatsappLink }: WhatsAppPopupProps) =>
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-xl font-bold text-[#1B1B0C] flex items-center gap-2">
-              <MessageCircle className="w-6 h-6 text-green-600" />
-              Conversar no WhatsApp
-            </DialogTitle>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onClose}
-              className="h-8 w-8 p-0"
-            >
-              <X className="w-4 h-4" />
-            </Button>
-          </div>
+          <DialogTitle className="text-xl font-bold text-[#1B1B0C] flex items-center gap-2">
+            <MessageCircle className="w-6 h-6 text-green-600" />
+            Conversar no WhatsApp
+          </DialogTitle>
         </DialogHeader>
         
         <div className="space-y-4 pt-4">
