@@ -1,277 +1,210 @@
 import React, { useState } from 'react';
+import { ArrowLeft, ArrowRight, Check, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
-import { MapPin, Phone, Mail, CheckCircle, MessageCircle } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+import { formatPhone, isValidPhone } from '@/lib/phone';
+import { track } from '@/lib/track';
 import { supabase } from '@/integrations/supabase/client';
-import { useSecurityValidation } from '@/hooks/useSecurityValidation';
-import { SecurityAlert } from '@/components/SecurityAlert';
+import { toast } from 'sonner';
 
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-    gtag_report_conversion_contact: (url?: string) => boolean;
-  }
-}
+const employeeRanges = ['10–30', '31–100', '101–300', '+300'];
+const segments = ['Saúde', 'Indústria', 'Varejo', 'Hotelaria', 'Escritório', 'Educação', 'Cooperativas', 'Logística', 'Outro'];
+const states = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
+
+type FormState = {
+  funcionarios: string;
+  segmento: string;
+  estado: string;
+  nome: string;
+  telefone: string;
+  email: string;
+  empresa: string;
+  necessidade: string;
+};
+
+const initialState: FormState = {
+  funcionarios: '', segmento: '', estado: '', nome: '', telefone: '', email: '', empresa: '', necessidade: '',
+};
 
 const ContactForm = () => {
-  const { validateForm } = useSecurityValidation();
-  const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    telefone: '',
-    funcionarios: '',
-    estado: ''
-  });
-  
-  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [step, setStep] = useState<1 | 2>(1);
+  const [data, setData] = useState(initialState);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [started, setStarted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setValidationErrors([]);
-    
-    // Enhanced security validation
-    const validation = validateForm(formData);
-    if (!validation.isValid) {
-      setValidationErrors(validation.errors);
-      toast.error('Por favor, corrija os erros de validação indicados.');
-      setIsSubmitting(false);
-      return;
-    }
-    
+  const set = (field: keyof FormState, value: string) => {
+    if (!started) { setStarted(true); track('form_start'); }
+    setData((current) => ({ ...current, [field]: value }));
+    setErrors((current) => ({ ...current, [field]: '' }));
+  };
+
+  const validateStepOne = () => {
+    const next: Record<string, string> = {};
+    if (!data.funcionarios) next.funcionarios = 'Escolha o tamanho da equipe.';
+    if (!data.segmento) next.segmento = 'Selecione o segmento.';
+    if (!data.estado) next.estado = 'Selecione o estado.';
+    setErrors(next);
+    return Object.keys(next).length === 0;
+  };
+
+  const validateStepTwo = () => {
+    const next: Record<string, string> = {};
+    if (data.nome.trim().length < 2) next.nome = 'Informe seu nome.';
+    if (!isValidPhone(data.telefone)) next.telefone = 'Informe 11 dígitos, incluindo o DDD.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) next.email = 'Informe um e-mail válido.';
+    if (data.empresa.trim().length < 2) next.empresa = 'Informe o nome da empresa.';
+    setErrors(next);
+    return Object.keys(next).length === 0;
+  };
+
+  const goNext = () => {
+    if (!validateStepOne()) return;
+    setStep(2);
+    track('form_step_2', { funcionarios: data.funcionarios, segmento: data.segmento, estado: data.estado });
+  };
+
+  const submit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!validateStepTwo()) return;
+    setSubmitting(true);
     try {
-      // Use sanitized data from validation
-      const sanitizedData = validation.sanitized;
-      
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: sanitizedData
-      });
-
-      if (error) {
-        throw error;
-      }
-
-      // Track conversion with sanitized data
-      if (typeof window.gtag !== 'undefined') {
-        window.gtag('event', 'conversion', {
-          'send_to': 'AW-11200620047/6tpRCMqZ16YYEI_M79wp',
-          'user_data': {
-            'email_address': sanitizedData.email.toLowerCase(),
-            'phone_number': sanitizedData.telefone,
-            'first_name': sanitizedData.nome.split(' ')[0],
-            'last_name': sanitizedData.nome.split(' ').slice(1).join(' ') || ''
-          }
-        });
-      }
-
-      toast.success('Formulário enviado com sucesso! Entraremos em contato em breve.');
-      setFormData({
-        nome: '',
-        email: '',
-        telefone: '',
-        funcionarios: '',
-        estado: ''
-      });
-      setValidationErrors([]);
-      setShowSuccessDialog(true);
-    } catch (error: any) {
+      const { error } = await supabase.functions.invoke('send-contact-email', { body: data });
+      if (error) throw error;
+      track('generate_lead', { source: 'form', funcionarios: data.funcionarios, segmento: data.segmento });
+      if (typeof window.gtag_report_conversion_lead === 'function') window.gtag_report_conversion_lead();
+      window.location.assign('/obrigado');
+    } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Erro ao enviar formulário. Tente novamente.');
-    } finally {
-      setIsSubmitting(false);
+      toast.error('Não foi possível enviar agora. Revise os dados e tente novamente.');
+      setSubmitting(false);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const whatsappLink = "https://wa.me/555433831351?text=Quero%20fazer%20or%C3%A7amento%20de%20uniformes%20corporativos%20para%20minha%20empresa";
-  
-  const benefits = ["Orçamento sem compromisso", "Atendimento personalizado", "Resposta em até 24h", "Consultoria gratuita"];
+  const errorFor = (field: string) => errors[field] ? <p className="mt-1.5 text-sm text-destructive" role="alert">{errors[field]}</p> : null;
 
   return (
-    <>
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white font-inter relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 left-0 w-72 h-72 bg-[#ECE08A]/10 rounded-full blur-3xl -translate-x-36 -translate-y-36"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#62624C]/5 rounded-full blur-3xl translate-x-32 translate-y-32"></div>
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 bg-[#ECE08A]/20 px-4 py-2 rounded-full mb-6">
-                <Mail className="w-5 h-5 text-[#62624C]" />
-                <span className="text-sm font-medium text-[#62624C]">Entre em contato</span>
-              </div>
-              
-              <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-4">
-                Pronto para transformar os uniformes da sua empresa?
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Solicite seu orçamento personalizado e descubra como podemos ajudar sua empresa
-              </p>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-              <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#62624C] to-[#ECE08A]"></div>
-                
-                <div className="text-center mb-8">
-                  <img src="/lovable-uploads/4376058e-6435-4383-808e-6c861f93344c.png" alt="Natalia Grando Logo" className="h-28 mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-[#1B1B0C] mb-2">
-                    Solicite seu orçamento
-                  </h3>
-                  <p className="text-gray-600">
-                    Preencha os dados e nossa equipe entrará em contato
-                  </p>
-                </div>
-                
-                {/* Security validation errors */}
-                {validationErrors.length > 0 && (
-                  <div className="mb-6 space-y-2">
-                    {validationErrors.map((error, index) => (
-                      <SecurityAlert
-                        key={index}
-                        type="error"
-                        message={error}
-                        className="text-sm"
-                      />
-                    ))}
-                  </div>
-                )}
-                
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <Input type="text" name="nome" placeholder="Nome completo" value={formData.nome} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
-                  <Input type="email" name="email" placeholder="E-mail corporativo" value={formData.email} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
-                  <Input type="tel" name="telefone" placeholder="Telefone / WhatsApp" value={formData.telefone} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
-                  <Input type="text" name="funcionarios" placeholder="Número de funcionários" value={formData.funcionarios} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
-                  <Input type="text" name="estado" placeholder="Estado da empresa" value={formData.estado} onChange={handleChange} required className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#62624C] focus:border-transparent transition-all" />
-                  
-                  <Button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold py-4 rounded-xl text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? 'Enviando...' : 'Enviar solicitação'}
-                  </Button>
-                </form>
-
-                <div className="mt-6 pt-6 border-t border-gray-100">
-                  <h4 className="font-semibold text-[#1B1B0C] mb-3 text-center">O que você ganha:</h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    {benefits.map((benefit, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                        <span className="text-sm text-gray-600">{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-8">
-                <div className="relative">
-                  <img src="/lovable-uploads/50adb655-c7ac-4ff0-a696-c1494c8f8401.png" alt="Uniformes Profissionais" className="w-full h-80 object-cover" />
-                </div>
-
-                <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
-                  <h4 className="font-semibold text-[#1B1B0C] mb-4 text-center">Outras formas de contato</h4>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                      <div className="p-2 bg-[#62624C] rounded-lg">
-                        <Phone className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-[#1B1B0C]">WhatsApp</p>
-                        <p className="text-sm text-gray-600">(54) 3383-1351</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                      <div className="p-2 bg-[#62624C] rounded-lg">
-                        <Mail className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-[#1B1B0C]">E-mail</p>
-                        <p className="text-sm text-gray-600">comercial@nataliagrando.com.br</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                      <div className="p-2 bg-[#62624C] rounded-lg">
-                        <MapPin className="w-4 h-4 text-white" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-[#1B1B0C]">Localização</p>
-                        <p className="text-sm text-gray-600">Rio Grande do Sul</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <section id="orcamento" className="py-16 md:py-24 bg-gold-soft">
+      <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+        <div className="text-center max-w-2xl mx-auto reveal">
+          <p className="text-sm font-semibold uppercase tracking-wider text-olive-deep">Orçamento personalizado</p>
+          <h2 className="mt-2 text-[28px] md:text-[40px] font-bold text-ink">Vamos vestir sua equipe?</h2>
+          <p className="mt-3 text-muted-foreground">Conte sobre sua empresa. Nossa equipe prepara uma proposta sem compromisso.</p>
         </div>
-      </section>
 
-      {/* Success Dialog */}
-      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader className="text-center">
-            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <CheckCircle className="w-8 h-8 text-green-600" />
-            </div>
-            <DialogTitle className="text-2xl font-bold text-[#1B1B0C]">
-              Obrigado pelo seu interesse!
-            </DialogTitle>
-            <DialogDescription className="text-gray-600 mt-2">
-              Recebemos sua solicitação e entraremos em contato em breve para apresentar nossa proposta personalizada.
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="mt-6 space-y-3">
-            <Button 
-              asChild 
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-all duration-300"
-            >
-              <a 
-                href={whatsappLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (typeof window.gtag_report_conversion_contact !== 'undefined') {
-                    window.gtag_report_conversion_contact(whatsappLink);
-                  } else {
-                    window.open(whatsappLink, '_blank');
-                  }
-                }}
-              >
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Falar no WhatsApp agora
-              </a>
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              onClick={() => setShowSuccessDialog(false)}
-              className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 py-3 rounded-xl transition-all duration-300"
-            >
-              Fechar
-            </Button>
+        <div className="mt-10 grid lg:grid-cols-2 bg-background rounded-2xl overflow-hidden shadow-lift reveal">
+          <div className="hidden lg:block min-h-[620px]">
+            <img
+              src="/img/contato-611.webp"
+              srcSet="/img/contato-480.webp 480w, /img/contato-611.webp 611w"
+              sizes="50vw"
+              width={611}
+              height={409}
+              loading="lazy"
+              alt="Equipe usando uniformes corporativos personalizados"
+              className="w-full h-full object-cover"
+            />
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+
+          <form onSubmit={submit} className="p-6 md:p-10 lg:p-12" noValidate>
+            <div className="flex items-center justify-between text-sm font-medium">
+              <span className="text-olive-deep">Etapa {step} de 2</span>
+              <span className="text-muted-foreground">{step === 1 ? 'Sua empresa' : 'Seu contato'}</span>
+            </div>
+            <div className="mt-3 h-2 rounded-full bg-muted overflow-hidden" aria-label={`Progresso: etapa ${step} de 2`}>
+              <div className="h-full bg-olive transition-[width] duration-300" style={{ width: step === 1 ? '50%' : '100%' }} />
+            </div>
+
+            {step === 1 ? (
+              <div className="mt-8 space-y-6">
+                <fieldset>
+                  <legend className="text-sm font-semibold text-ink">Número de colaboradores</legend>
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    {employeeRanges.map((range) => (
+                      <button
+                        key={range}
+                        type="button"
+                        aria-pressed={data.funcionarios === range}
+                        onClick={() => set('funcionarios', range)}
+                        className={cn('min-h-12 rounded-xl border px-3 font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring', data.funcionarios === range ? 'border-olive bg-olive text-primary-foreground' : 'border-input bg-background text-ink hover:bg-accent')}
+                      >
+                        {range}
+                      </button>
+                    ))}
+                  </div>
+                  {errorFor('funcionarios')}
+                </fieldset>
+
+                <div>
+                  <Label htmlFor="segmento">Segmento</Label>
+                  <Select value={data.segmento} onValueChange={(value) => set('segmento', value)}>
+                    <SelectTrigger id="segmento" className="mt-2 h-12"><SelectValue placeholder="Selecione o segmento" /></SelectTrigger>
+                    <SelectContent>{segments.map((item) => <SelectItem key={item} value={item}>{item}</SelectItem>)}</SelectContent>
+                  </Select>
+                  {errorFor('segmento')}
+                </div>
+
+                <div>
+                  <Label htmlFor="estado">Estado</Label>
+                  <Select value={data.estado} onValueChange={(value) => set('estado', value)}>
+                    <SelectTrigger id="estado" className="mt-2 h-12"><SelectValue placeholder="Selecione a UF" /></SelectTrigger>
+                    <SelectContent>{states.map((uf) => <SelectItem key={uf} value={uf}>{uf}</SelectItem>)}</SelectContent>
+                  </Select>
+                  {errorFor('estado')}
+                </div>
+
+                <Button type="button" onClick={goNext} className="w-full h-12 font-semibold">
+                  Continuar <ArrowRight className="w-4 h-4 ml-2" aria-hidden />
+                </Button>
+              </div>
+            ) : (
+              <div className="mt-8 space-y-5">
+                <div>
+                  <Label htmlFor="nome">Nome</Label>
+                  <Input id="nome" name="nome" autoComplete="name" value={data.nome} onChange={(e) => set('nome', e.target.value)} className="mt-2 h-12" />
+                  {errorFor('nome')}
+                </div>
+                <div>
+                  <Label htmlFor="telefone">WhatsApp com DDD</Label>
+                  <Input id="telefone" name="telefone" type="tel" inputMode="numeric" autoComplete="tel-national" placeholder="(54) 99999-9999" maxLength={15} value={data.telefone} onChange={(e) => set('telefone', formatPhone(e.target.value))} className="mt-2 h-12" />
+                  {errorFor('telefone')}
+                </div>
+                <div>
+                  <Label htmlFor="email">E-mail corporativo</Label>
+                  <Input id="email" name="email" type="email" inputMode="email" autoComplete="email" value={data.email} onChange={(e) => set('email', e.target.value)} className="mt-2 h-12" />
+                  {errorFor('email')}
+                </div>
+                <div>
+                  <Label htmlFor="empresa">Empresa</Label>
+                  <Input id="empresa" name="empresa" autoComplete="organization" value={data.empresa} onChange={(e) => set('empresa', e.target.value)} className="mt-2 h-12" />
+                  {errorFor('empresa')}
+                </div>
+                <div>
+                  <Label htmlFor="necessidade">O que você precisa? <span className="font-normal text-muted-foreground">(opcional)</span></Label>
+                  <Textarea id="necessidade" name="necessidade" maxLength={500} value={data.necessidade} onChange={(e) => set('necessidade', e.target.value)} className="mt-2 min-h-24 resize-y" />
+                </div>
+                <div className="flex gap-3">
+                  <Button type="button" variant="outline" onClick={() => setStep(1)} className="h-12 px-4">
+                    <ArrowLeft className="w-4 h-4 mr-2" aria-hidden /> Voltar
+                  </Button>
+                  <Button type="submit" disabled={submitting} className="h-12 flex-1 font-semibold">
+                    {submitting ? 'Enviando...' : <><Send className="w-4 h-4 mr-2" aria-hidden /> Solicitar orçamento</>}
+                  </Button>
+                </div>
+                <p className="flex items-start gap-2 text-xs text-muted-foreground">
+                  <Check className="w-4 h-4 text-success shrink-0" aria-hidden />
+                  Seus dados serão usados apenas para responder à solicitação.
+                </p>
+              </div>
+            )}
+          </form>
+        </div>
+      </div>
+    </section>
   );
 };
 

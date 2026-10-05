@@ -31,6 +31,7 @@ const ClientLogos = () => (
     >
       <div className="flex w-max animate-scroll-infinite-mobile md:animate-scroll-infinite group-hover:[animation-play-state:paused]">
         <LogoSet />
+        {/* The second visual pass is intentionally duplicated in the DOM; browser caching prevents duplicate downloads. */}
         <LogoSet hidden />
       </div>
     </div>

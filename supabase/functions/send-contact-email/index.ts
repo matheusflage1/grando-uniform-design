@@ -15,6 +15,9 @@ interface ContactFormData {
   telefone: string;
   funcionarios: string;
   estado: string;
+  empresa?: string;
+  segmento?: string;
+  necessidade?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -72,7 +75,10 @@ const handler = async (req: Request): Promise<Response> => {
       email: sanitizeInput(rawData.email),
       telefone: sanitizeInput(rawData.telefone),
       funcionarios: sanitizeInput(rawData.funcionarios),
-      estado: sanitizeInput(rawData.estado)
+      estado: sanitizeInput(rawData.estado),
+      empresa: sanitizeInput(rawData.empresa),
+      segmento: sanitizeInput(rawData.segmento),
+      necessidade: sanitizeInput(rawData.necessidade)
     };
 
     // Validate required fields
@@ -145,9 +151,19 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Save data to natalia table
     console.log('Inserting data into database');
+    const databasePayload = {
+      nome: formData.empresa ? `${formData.nome} — ${formData.empresa}` : formData.nome,
+      email: formData.email,
+      telefone: formData.telefone,
+      funcionarios: formData.segmento
+        ? `${formData.funcionarios} | ${formData.segmento}${formData.necessidade ? ` | ${formData.necessidade}` : ''}`
+        : formData.funcionarios,
+      estado: formData.estado,
+    };
+
     const { error: dbError } = await supabase
       .from("natalia")
-      .insert([formData]);
+      .insert([databasePayload]);
 
     if (dbError) {
       console.error("Database error:", dbError);
@@ -178,7 +194,10 @@ const handler = async (req: Request): Promise<Response> => {
               <p><strong>E-mail:</strong> ${formData.email}</p>
               <p><strong>Telefone:</strong> ${formData.telefone}</p>
               <p><strong>Número de funcionários:</strong> ${formData.funcionarios}</p>
+              <p><strong>Empresa:</strong> ${formData.empresa || 'Não informado'}</p>
+              <p><strong>Segmento:</strong> ${formData.segmento || 'Não informado'}</p>
               <p><strong>Estado:</strong> ${formData.estado}</p>
+              <p><strong>O que precisa:</strong> ${formData.necessidade || 'Não informado'}</p>
             </div>
             
             <div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107;">

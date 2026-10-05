@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import ThankYou from "./pages/ThankYou";
+import Privacy from "./pages/Privacy";
+import { WhatsAppProvider } from "@/components/WhatsAppProvider";
 
 const queryClient = new QueryClient();
 
@@ -18,13 +21,16 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/admin" element={<Admin />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <WhatsAppProvider>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/obrigado" element={<ThankYou />} />
+              <Route path="/privacidade" element={<Privacy />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </WhatsAppProvider>
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>

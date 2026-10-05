@@ -58,7 +58,7 @@ const Hero = () => {
             width={1172}
             height={1250}
             alt="Homem e mulher vestindo camisas jeans e calças sociais de uniforme corporativo Natalia Grando"
-            fetchPriority="high"
+            ref={(node) => node?.setAttribute('fetchpriority', 'high')}
             className="w-full max-w-[520px] h-[340px] lg:h-auto object-cover object-top lg:object-contain"
           />
         </div>
