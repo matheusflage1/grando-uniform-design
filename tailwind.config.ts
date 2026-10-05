@@ -19,6 +19,11 @@ export default {
 		},
 		extend: {
 			colors: {
+				gold: { DEFAULT: 'hsl(var(--gold))', soft: 'hsl(var(--gold-soft))' },
+				cream: 'hsl(var(--cream))',
+				ink: 'hsl(var(--ink))',
+				olive: { DEFAULT: 'hsl(var(--olive))', deep: 'hsl(var(--olive-deep))' },
+				success: 'hsl(var(--success))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -63,6 +68,7 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				}
 			},
+			boxShadow: { card: 'var(--shadow-card)', lift: 'var(--shadow-lift)' },
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
