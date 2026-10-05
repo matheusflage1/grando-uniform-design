@@ -1,68 +1,71 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/useAuth';
-import { LogIn, LogOut, Shield } from 'lucide-react';
-import WhatsAppPopup from './WhatsAppPopup';
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-    gtag_report_conversion_lead: (url?: string) => boolean;
-  }
-}
+import { MessageCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { scrollToForm } from '@/lib/track';
+import { useWhatsApp } from './WhatsAppProvider';
+
+const links = [
+  { href: '#como-funciona', label: 'Como funciona' },
+  { href: '#diferenciais', label: 'Diferenciais' },
+  { href: '#faq', label: 'FAQ' },
+];
+
 const Header = () => {
-  const {
-    user,
-    isAdmin,
-    signOut
-  } = useAuth();
-  const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
-  const whatsappLink = "https://wa.me/555433831351?text=Quero%20fazer%20or%C3%A7amento%20de%20uniformes%20corporativos%20para%20minha%20empresa";
-  const handleSignOut = async () => {
-    await signOut();
-  };
-  return <header className="w-full bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] shadow-sm z-50 font-inter py-[0px]">
-      <div className="flex justify-between lg:justify-center items-center relative px-6 lg:px-6">
-        <div className="flex items-center lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
-          <img src="/lovable-uploads/4376058e-6435-4383-808e-6c861f93344c.png" alt="Natalia Grando Logo" className="h-36 object-fill" />
-        </div>
-        
-        <div className="flex items-center space-x-3 lg:absolute lg:right-6">
-          {user ? <>
-              {isAdmin && <Button asChild variant="outline" className="border-[#62624C] text-[#62624C] hover:bg-[#62624C] hover:text-white">
-                  <Link to="/admin">
-                    <Shield className="w-4 h-4 mr-2" />
-                    Admin
-                  </Link>
-                </Button>}
-              <Button onClick={handleSignOut} variant="outline" className="border-[#62624C] text-[#62624C] hover:bg-[#62624C] hover:text-white">
-                <LogOut className="w-4 h-4 mr-2" />
-                Sair
-              </Button>
-            </> : <Button asChild variant="outline" className="border-[#62624C] text-[#62624C] hover:bg-[#62624C] hover:text-white mr-3">
-              
-            </Button>}
-          
-          <Button 
-            className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-6 py-3 rounded-lg transition-colors"
-            onClick={() => {
-              // Enviar conversão de Lead ao abrir popup
-              if (typeof window.gtag_report_conversion_lead !== 'undefined') {
-                window.gtag_report_conversion_lead();
-              }
-              setShowWhatsAppPopup(true);
-            }}
+  const { openWhatsApp } = useWhatsApp();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <header
+      className={cn(
+        'sticky top-0 z-40 w-full transition-all duration-300',
+        scrolled ? 'bg-cream/85 backdrop-blur-md shadow-card' : 'bg-gold'
+      )}
+    >
+      <div className={cn('container mx-auto flex items-center justify-between gap-4 px-4 md:px-6 transition-all duration-300', scrolled ? 'h-14 md:h-16' : 'h-16 md:h-20')}>
+        <a href="#topo" aria-label="Natalia Grando — início" className="shrink-0">
+          <img
+            src="/img/logo-h96.webp"
+            srcSet="/img/logo-h96.webp 1x, /img/logo-h192.webp 2x"
+            width={53}
+            height={40}
+            alt="Natalia Grando Uniformes Corporativos"
+            className={cn('w-auto transition-all duration-300', scrolled ? 'h-9 md:h-11' : 'h-10 md:h-14')}
+          />
+        </a>
+
+        <nav aria-label="Seções" className="hidden md:flex items-center gap-7">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="text-sm font-medium text-ink/80 hover:text-ink transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+              {l.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            onClick={() => openWhatsApp('header')}
+            className="hidden md:inline-flex h-11 border-olive bg-transparent text-olive-deep hover:bg-olive hover:text-primary-foreground"
           >
-            Solicitar Orçamento
+            <MessageCircle className="w-4 h-4 mr-2" aria-hidden />
+            WhatsApp
+          </Button>
+          <Button onClick={() => scrollToForm('header')} className="h-11 px-4 md:px-5 font-semibold">
+            <span className="md:hidden">Orçamento</span>
+            <span className="hidden md:inline">Solicitar orçamento</span>
           </Button>
         </div>
       </div>
-      
-      <WhatsAppPopup
-        isOpen={showWhatsAppPopup}
-        onClose={() => setShowWhatsAppPopup(false)}
-        whatsappLink={whatsappLink}
-      />
-    </header>;
+    </header>
+  );
 };
+
 export default Header;
