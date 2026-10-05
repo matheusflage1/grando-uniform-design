@@ -1,128 +1,81 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { Gem, Workflow, LifeBuoy, Check, Store } from 'lucide-react';
 
-import React from 'react';
-import { Users, Scissors, Shirt, ShoppingCart, CheckCircle, Package, BarChart3, RotateCcw, Ruler, Award } from 'lucide-react';
+const cards = [
+  { icon: Gem, title: 'Qualidade premium', items: ['Costuras que não desfiam', 'Tecidos de alta durabilidade', 'Grade do 34 ao 62'] },
+  { icon: Workflow, title: 'Processo simplificado', items: ['__store__', 'Aprovação de amostra', 'Entrega em kits individuais'] },
+  { icon: LifeBuoy, title: 'Pós-venda', items: ['Relatórios gerenciais', 'Consultoria de medição', 'Reposição facilitada'] },
+];
 
-const Differentials = () => {
-  const differentials = [
-    {
-      title: "Uniformes Profissionais Premium",
-      subtitle: "Fardas de trabalho com materiais e acabamentos superiores",
-      items: [
-        { icon: <Ruler className="w-4 h-4" />, text: "Uniformes personalizados - Grade de tamanhos do 34 ao 62" },
-        { icon: <Scissors className="w-4 h-4" />, text: "Fardamento com costuras premium que não desfiam" },
-        { icon: <Shirt className="w-4 h-4" />, text: "Vestuário de trabalho com tecidos de alta qualidade" }
-      ],
-      gradient: "from-blue-500 to-blue-600",
-      bgColor: "bg-blue-50"
-    },
-    {
-      title: "Confecção Simplificada",
-      subtitle: "Uniformes empresariais com processo facilitado do início ao fim",
-      items: [
-        { icon: <ShoppingCart className="w-4 h-4" />, text: "Loja virtual para uniformes online" },
-        { icon: <CheckCircle className="w-4 h-4" />, text: "Aprovação de uniformes corporativos (físicas ou digitais)" },
-        { icon: <Package className="w-4 h-4" />, text: "Fardas de trabalho entregues por kits personalizados" }
-      ],
-      gradient: "from-green-500 to-green-600",
-      bgColor: "bg-green-50"
-    },
-    {
-      title: "Suporte para Uniformes",
-      subtitle: "Pós-venda completo para uniformes industriais e corporativos",
-      items: [
-        { icon: <BarChart3 className="w-4 h-4" />, text: "Relatórios gerenciais de uniformes empresariais" },
-        { icon: <Users className="w-4 h-4" />, text: "Consultoria para medição de fardamento feminino e masculino" },
-        { icon: <RotateCcw className="w-4 h-4" />, text: "Reposição de uniformes profissionais facilitada" }
-      ],
-      gradient: "from-purple-500 to-purple-600",
-      bgColor: "bg-purple-50"
-    }
-  ];
-
-  return (
-    <section className="py-16 bg-white font-inter relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#ECE08A]/10 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-[#62624C]/5 to-transparent rounded-full blur-3xl"></div>
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-[#ECE08A]/20 px-4 py-2 rounded-full mb-6">
-            <Award className="w-5 h-5 text-[#62624C]" />
-            <span className="text-sm font-medium text-[#62624C]">Nossos diferenciais</span>
-          </div>
-          
-          <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-4">
-            Diferenciais da Nossa Confecção de Uniformes
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Fábrica especializada em uniformes profissionais, fardas de trabalho e vestuário corporativo personalizado
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          {differentials.map((differential, index) => (
-            <div key={index} className="group">
-              <div className={`${differential.bgColor} p-8 rounded-2xl border-2 border-transparent hover:border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden`}>
-                {/* Gradient accent */}
-                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${differential.gradient}`}></div>
-                
-                {/* Icon background */}
-                <div className={`w-12 h-12 bg-gradient-to-r ${differential.gradient} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <Award className="w-6 h-6 text-white" />
-                </div>
-
-                <h3 className="text-xl font-semibold text-[#1B1B0C] mb-2 group-hover:text-[#62624C] transition-colors">
-                  {differential.title}
-                </h3>
-                
-                <p className="text-sm text-gray-500 mb-6 font-medium">
-                  {differential.subtitle}
-                </p>
-                
-                <ul className="space-y-3">
-                  {differential.items.map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-start group/item">
-                      <div className="flex-shrink-0 p-1 bg-white rounded-lg shadow-sm mr-3 group-hover/item:shadow-md transition-shadow">
-                        <span className="text-green-500">{item.icon}</span>
-                      </div>
-                      <span className="text-gray-700 text-sm leading-relaxed group-hover/item:text-gray-900 transition-colors">
-                        {item.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Additional trust section */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-[#62624C]/5 to-[#ECE08A]/10 p-8 rounded-2xl border border-[#ECE08A]/30">
-            <div className="flex justify-center items-center gap-8 flex-wrap">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-[#62624C]">+500</div>
-                <div className="text-sm text-gray-600">Empresas com uniformes</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-[#62624C]">45 dias</div>
-                <div className="text-sm text-gray-600">Confecção de uniformes</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-[#62624C]">2x</div>
-                <div className="text-sm text-gray-600">Mais durabilidade fardas</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-[#62624C]">100%</div>
-                <div className="text-sm text-gray-600">Uniformes garantidos</div>
-              </div>
-            </div>
-          </div>
-        </div>
+const Differentials = () => (
+  <section id="diferenciais" className="py-16 md:py-24 bg-cream">
+    <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+      <h2 className="text-[28px] md:text-[40px] font-bold text-ink text-center reveal">Diferenciais</h2>
+      <div className="mt-10 grid gap-5 md:grid-cols-3">
+        {cards.map(({ icon: Icon, title, items }) => (
+          <article key={title} className="rounded-2xl bg-card p-6 md:p-8 shadow-card border border-border reveal">
+            <span className="grid place-items-center w-12 h-12 rounded-xl bg-gold text-olive-deep">
+              <Icon className="w-6 h-6" aria-hidden />
+            </span>
+            <h3 className="mt-4 text-xl font-semibold text-ink">{title}</h3>
+            <ul className="mt-4 space-y-3">
+              {items.map((it) =>
+                it === '__store__' ? (
+                  <li key={it} className="rounded-xl border border-olive/30 bg-gold-soft p-3">
+                    <span className="inline-block rounded-full bg-olive px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-primary-foreground">Exclusivo</span>
+                    <p className="mt-1.5 flex items-center gap-2 font-semibold text-ink">
+                      <Store className="w-4 h-4 text-olive-deep" aria-hidden />
+                      Loja virtual para os colaboradores
+                    </p>
+                  </li>
+                ) : (
+                  <li key={it} className="flex items-start gap-2.5 text-ink/85">
+                    <Check className="w-4 h-4 mt-1 text-olive shrink-0" aria-hidden />
+                    {it}
+                  </li>
+                )
+              )}
+            </ul>
+          </article>
+        ))}
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
+
+const Counter = ({ to, prefix = '', suffix = '' }: { to: number; prefix?: string; suffix?: string }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setVal(to); return; }
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      const start = performance.now();
+      const tick = (t: number) => {
+        const p = Math.min(1, (t - start) / 1200);
+        setVal(Math.round(to * (1 - Math.pow(1 - p, 3))));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [to]);
+  return <span ref={ref}>{prefix}{val}{suffix}</span>;
 };
+
+export const Stats = () => (
+  <section aria-label="Números" className="py-14 md:py-16 bg-olive text-primary-foreground">
+    <dl className="container mx-auto px-4 md:px-6 max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div><dt className="sr-only">Empresas atendidas</dt><dd className="text-4xl md:text-5xl font-bold"><Counter to={500} prefix="+" /></dd><p className="mt-1 text-primary-foreground/85">empresas atendidas</p></div>
+      <div><dt className="sr-only">Prazo médio</dt><dd className="text-4xl md:text-5xl font-bold"><Counter to={45} /></dd><p className="mt-1 text-primary-foreground/85">dias úteis de prazo médio</p></div>
+      <div><dt className="sr-only">Durabilidade</dt><dd className="text-4xl md:text-5xl font-bold"><Counter to={2} suffix="x" /></dd><p className="mt-1 text-primary-foreground/85">mais durabilidade</p></div>
+      <div><dt className="sr-only">Reposição</dt><dd className="text-2xl md:text-3xl font-bold leading-[3rem] md:leading-[3.75rem]">Reposição</dd><p className="mt-1 text-primary-foreground/85">garantida</p></div>
+    </dl>
+  </section>
+);
 
 export default Differentials;

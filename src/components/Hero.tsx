@@ -1,105 +1,70 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import ClientLogos from './ClientLogos';
-import { CheckCircle, Star } from 'lucide-react';
-import WhatsAppPopup from './WhatsAppPopup';
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-    gtag_report_conversion_lead: (url?: string) => boolean;
-  }
-}
+import { Check, MessageCircle, Star } from 'lucide-react';
+import { useWhatsApp } from './WhatsAppProvider';
+
+const bullets = ['Pedido a partir de 60 peças', 'Grade do 34 ao 62', 'Entrega em ~45 dias úteis'];
+
 const Hero = () => {
-  const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
-  const whatsappLink = "https://wa.me/555433831351?text=Quero%20fazer%20or%C3%A7amento%20de%20uniformes%20corporativos%20para%20minha%20empresa";
-  return <section className="pt-8 bg-gradient-to-br from-[#ECE08A] via-[#ECE08A] to-[#F5F1A0] font-inter relative overflow-hidden py-0">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#62624C]/10 rounded-full blur-2xl"></div>
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 items-center pb-0">
-          <div className="space-y-6">
-            {/* Trust indicators */}
-            <div className="flex items-center gap-4 mb-4">
-              <div className="flex items-center gap-1">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
-              </div>
-              <span className="text-sm font-medium text-[#1B1B0C]/80">+500 empresas atendidas</span>
+  const { openWhatsApp } = useWhatsApp();
+  return (
+    <section id="topo" className="bg-gold overflow-hidden">
+      <div className="container mx-auto px-4 md:px-6 grid lg:grid-cols-[55fr_45fr] gap-6 lg:gap-10 items-end">
+        <div className="pt-6 pb-2 lg:py-20 space-y-5">
+          <div className="flex items-center gap-2">
+            <div className="flex" aria-hidden>
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-4 h-4 fill-olive-deep text-olive-deep" />
+              ))}
             </div>
+            <span className="text-sm font-medium text-ink">+500 empresas atendidas</span>
+          </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold text-[#1B1B0C] leading-tight">
-              Uniformes corporativos de <span className="text-[#62624C]">alta durabilidade</span> e qualidade.
-            </h1>
-            
-            <div className="bg-white/50 backdrop-blur-sm p-4 rounded-lg border border-white/20 shadow-sm">
-              <p className="text-xl text-[#1B1B0C] font-semibold mb-3">
-                Confecção de uniformes empresariais que duram até 2x mais que os tradicionais.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-3 text-sm">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="text-[#1B1B0C]/80 text-sm">Uniformes personalizados para empresas</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="text-[#1B1B0C]/80">Vestuário de trabalho industrial</span>
-                </div>
-              </div>
-            </div>
+          <h1 className="text-[40px] leading-[1.08] md:text-[56px] font-bold text-ink">
+            Uniformes corporativos que duram até <span className="text-olive-deep underline decoration-olive/40 decoration-4 underline-offset-4">2x mais</span>.
+          </h1>
 
-            <Button 
-              size="lg" 
-              className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-md"
-              onClick={() => {
-                // Enviar conversão de Lead ao abrir popup
-                if (typeof window.gtag_report_conversion_lead !== 'undefined') {
-                  window.gtag_report_conversion_lead();
-                }
-                setShowWhatsAppPopup(true);
-              }}
+          <p className="text-lg text-ink/85">Tecidos e costuras premium para sua equipe vestir bem por mais tempo.</p>
+
+          <ul className="space-y-2">
+            {bullets.map((b) => (
+              <li key={b} className="flex items-center gap-2.5 text-ink font-medium">
+                <span className="grid place-items-center w-6 h-6 rounded-full bg-olive text-primary-foreground shrink-0">
+                  <Check className="w-3.5 h-3.5" aria-hidden />
+                </span>
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          <div className="pt-1">
+            <Button
+              size="lg"
+              onClick={() => openWhatsApp('hero')}
+              className="w-full sm:w-auto h-14 px-8 text-base font-semibold shadow-lift"
             >
-              Solicite seu orçamento
+              <MessageCircle className="w-5 h-5 mr-2" aria-hidden />
+              Falar no WhatsApp
             </Button>
-          </div>
-          
-          <div className="flex justify-center relative">
-            <img src="/lovable-uploads/844ce183-22a2-46d6-9be3-3630503e47ee.png" alt="Uniformes profissionais corporativos - Fardas de trabalho personalizadas para empresas - Natalia Grando Confecções" className="w-4/5 h-auto" />
+            <p className="mt-3 text-sm text-ink/75">Resposta em até 24h úteis • Sem compromisso</p>
           </div>
         </div>
-      </div>
 
-      {/* Client Logos with white background */}
-      <div className="bg-white py-4 w-full border-t border-gray-200">
-        <div className="text-center mb-2">
-          <p className="text-sm font-medium text-[#1B1B0C]/70">Empresas que confiam em nosso trabalho</p>
-        </div>
-        <ClientLogos />
-      </div>
-      
-      <div className="bg-white py-6 shadow-sm">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-6">
-              <span className="animate-text-color">
-                Fábrica de uniformes profissionais — especializada em soluções corporativas personalizadas.
-              </span>
-            </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Confecções de uniformes empresariais com foco em tecidos de alta qualidade, 
-              fardamento feminino e masculino, uniformes industriais e vestuário de trabalho 
-              que beneficiam tanto sua empresa quanto seus colaboradores.
-            </p>
-          </div>
+        <div className="flex justify-center lg:justify-end">
+          <img
+            src="/img/hero-800.webp"
+            srcSet="/img/hero-480.webp 480w, /img/hero-800.webp 800w, /img/hero-1100.webp 1100w"
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            width={1172}
+            height={1250}
+            alt="Homem e mulher vestindo camisas jeans e calças sociais de uniforme corporativo Natalia Grando"
+            fetchPriority="high"
+            className="w-full max-w-[520px] h-[340px] lg:h-auto object-cover object-top lg:object-contain"
+          />
         </div>
       </div>
-      
-      <WhatsAppPopup
-        isOpen={showWhatsAppPopup}
-        onClose={() => setShowWhatsAppPopup(false)}
-        whatsappLink={whatsappLink}
-      />
-    </section>;
+    </section>
+  );
 };
+
 export default Hero;

@@ -1,147 +1,79 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Clock, Shield, Truck, Repeat } from 'lucide-react';
-import WhatsAppPopup from './WhatsAppPopup';
+import { ClipboardList, Ruler, BadgeCheck, PackageCheck, RefreshCcw, Boxes, Users, CalendarCheck, MessageCircle } from 'lucide-react';
+import { scrollToForm } from '@/lib/track';
+import { useWhatsApp } from './WhatsAppProvider';
 
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-    gtag_report_conversion_lead: (url?: string) => boolean;
-  }
-}
+const steps = [
+  { icon: ClipboardList, title: 'Diagnóstico e proposta', text: 'Sugestão de modelos e tecidos conforme a rotina da equipe.' },
+  { icon: Ruler, title: 'Medição da equipe', text: 'Ajudamos na medição e na escolha dos tamanhos.' },
+  { icon: BadgeCheck, title: 'Aprovação de amostra', text: 'Peça piloto física ou digital antes da produção.' },
+  { icon: PackageCheck, title: 'Produção e entrega', text: 'Kits por colaborador, em ~45 dias úteis.' },
+];
+
+const conditions = [
+  { icon: Boxes, text: 'Mínimo de 60 peças (até 3 modelos)' },
+  { icon: Users, text: 'Ideal para empresas com +10 colaboradores' },
+  { icon: CalendarCheck, text: 'Prazo de entrega garantido' },
+];
 
 const WorkProcess = () => {
-  const [showWhatsAppPopup, setShowWhatsAppPopup] = useState(false);
-  const whatsappLink = "https://wa.me/555433831351?text=Quero%20fazer%20or%C3%A7amento%20de%20uniformes%20corporativos%20para%20minha%20empresa";
-
-  const steps = [
-    {
-      icon: <div className="text-4xl">🧩</div>,
-      lucideIcon: <Shield className="w-6 h-6" />,
-      title: "Uniformes Sob Medida",
-      description: "Desenvolvemos uniformes profissionais personalizados com sugestão de modelos, tecidos e orçamento com base nas necessidades da equipe.",
-      color: "from-blue-500 to-blue-600"
-    },
-    {
-      icon: <div className="text-4xl">📏</div>,
-      lucideIcon: <Clock className="w-6 h-6" />,
-      title: "Fardamento e Medição",
-      description: "Facilitamos a medição da equipe para fardas de trabalho e uniformes corporativos, garantindo conforto e segurança antes da produção.",
-      color: "from-green-500 to-green-600"
-    },
-    {
-      icon: <div className="text-4xl">🚚</div>,
-      lucideIcon: <Truck className="w-6 h-6" />,
-      title: "Produção e Entrega Rápida",
-      description: "Entrega direta no endereço corporativo. Prazo médio: 45 dias úteis.",
-      color: "from-orange-500 to-orange-600"
-    },
-    {
-      icon: <div className="text-4xl">♻️</div>,
-      lucideIcon: <Repeat className="w-6 h-6" />,
-      title: "Reposições Garantidas",
-      description: "Peças não saem de catálogo. Mantemos padronização e suporte para novas demandas.",
-      color: "from-purple-500 to-purple-600"
-    }
-  ];
-
+  const { openWhatsApp } = useWhatsApp();
   return (
-    <section className="py-16 bg-gradient-to-b from-[#FAF9F4] to-white font-inter relative">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-1/4 w-72 h-72 bg-[#62624C] rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-[#ECE08A] rounded-full blur-3xl"></div>
-      </div>
+    <>
+      <section id="como-funciona" className="py-16 md:py-24 bg-cream">
+        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
+          <h2 className="text-[28px] md:text-[40px] font-bold text-ink text-center reveal">Como funciona</h2>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-block p-2 bg-[#ECE08A]/20 rounded-full mb-4">
-            <div className="w-8 h-1 bg-[#62624C] rounded-full"></div>
-          </div>
-          <h2 className="text-3xl lg:text-4xl font-bold text-[#1B1B0C] mb-4">
-            Processo de Confecção de Uniformes Personalizados
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Fábrica de uniformes com processo transparente para uniformes empresariais, fardas de trabalho e vestuário corporativo
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {steps.map((step, index) => (
-            <div key={index} className="group">
-              <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 relative overflow-hidden">
-                {/* Gradient accent */}
-                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${step.color}`}></div>
-                
-                {/* Step number */}
-                <div className="absolute top-4 right-4 w-8 h-8 bg-[#ECE08A]/20 rounded-full flex items-center justify-center">
-                  <span className="text-sm font-bold text-[#62624C]">{index + 1}</span>
+          <ol className="mt-10 md:mt-14 relative grid gap-6 md:grid-cols-4 md:gap-8">
+            {/* connecting line */}
+            <span aria-hidden className="absolute bg-olive/25 left-6 top-6 bottom-6 w-px md:left-[12.5%] md:right-[12.5%] md:top-6 md:bottom-auto md:h-px md:w-auto" />
+            {steps.map(({ icon: Icon, title, text }, i) => (
+              <li key={title} className="relative flex md:flex-col md:items-center md:text-center gap-4 reveal">
+                <span className="relative z-10 grid place-items-center w-12 h-12 shrink-0 rounded-full bg-olive text-primary-foreground shadow-card">
+                  <Icon className="w-5 h-5" aria-hidden />
+                </span>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-olive-deep">Etapa {i + 1}</p>
+                  <h3 className="text-lg font-semibold text-ink">{title}</h3>
+                  <p className="text-muted-foreground mt-1">{text}</p>
                 </div>
+              </li>
+            ))}
+          </ol>
 
-                <div className="flex items-center gap-3 mb-4">
-                  {step.icon}
-                  <div className={`p-2 rounded-lg bg-gradient-to-r ${step.color} text-white`}>
-                    {step.lucideIcon}
-                  </div>
-                </div>
-                
-                <h3 className="text-lg font-semibold text-[#1B1B0C] mb-3 group-hover:text-[#62624C] transition-colors">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-gradient-to-r from-[#FFF5CC] to-[#ECE08A]/30 border border-[#ECE08A]/50 p-8 rounded-2xl text-center shadow-lg relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full -translate-y-16 translate-x-16"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#62624C]/10 rounded-full translate-y-12 -translate-x-12"></div>
-          
-          <div className="relative z-10">
-            <div className="mb-6">
-              <div className="inline-flex items-center gap-2 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full mb-4">
-                <Shield className="w-5 h-5 text-[#62624C]" />
-                <span className="text-sm font-medium text-[#1B1B0C]">Garantia de qualidade</span>
-              </div>
-              
-              <p className="text-lg font-semibold text-[#1B1B0C] mb-2">
-                Uniformes empresariais - Pedido mínimo: 60 peças (até 3 modelos diferentes)
-              </p>
-              <p className="text-gray-700 mb-2">
-                Confecção de uniformes profissionais ideal para empresas com mais de 10 funcionários
-              </p>
-              <p className="text-sm font-bold text-[#1B1B0C] bg-white/50 inline-block px-3 py-1 rounded-full">
-                Fábrica de uniformes com garantia de cumprimento de prazo
-              </p>
-            </div>
-            
-            <Button 
-              className="bg-[#62624C] hover:bg-[#4e4e3c] text-white font-semibold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
-              onClick={() => {
-                // Enviar conversão de Lead ao abrir popup
-                if (typeof window.gtag_report_conversion_lead !== 'undefined') {
-                  window.gtag_report_conversion_lead();
-                }
-                setShowWhatsAppPopup(true);
-              }}
-            >
-              FALE COM UM CONSULTOR
+          <div className="mt-10 flex flex-col items-center gap-5 text-center reveal">
+            <p className="inline-flex items-center gap-2 font-medium text-ink">
+              <RefreshCcw className="w-4 h-4 text-olive" aria-hidden />
+              Reposição garantida — os modelos não saem de linha.
+            </p>
+            <Button size="lg" onClick={() => scrollToForm('como_funciona')} className="h-12 px-8 font-semibold">
+              Solicitar orçamento
             </Button>
           </div>
         </div>
-      </div>
-      
-      <WhatsAppPopup
-        isOpen={showWhatsAppPopup}
-        onClose={() => setShowWhatsAppPopup(false)}
-        whatsappLink={whatsappLink}
-      />
-    </section>
+      </section>
+
+      <section aria-labelledby="condicoes-title" className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+          <div className="rounded-2xl bg-gold p-6 md:p-10 shadow-card reveal">
+            <h2 id="condicoes-title" className="text-[28px] md:text-[40px] font-bold text-ink">Condições</h2>
+            <ul className="mt-6 grid gap-4 md:grid-cols-3">
+              {conditions.map(({ icon: Icon, text }) => (
+                <li key={text} className="flex items-start gap-3 rounded-xl bg-background/70 p-4">
+                  <Icon className="w-5 h-5 text-olive-deep shrink-0 mt-0.5" aria-hidden />
+                  <span className="font-medium text-ink">{text}</span>
+                </li>
+              ))}
+            </ul>
+            <Button size="lg" onClick={() => openWhatsApp('condicoes')} className="mt-6 w-full md:w-auto h-12 px-8 font-semibold">
+              <MessageCircle className="w-5 h-5 mr-2" aria-hidden />
+              Falar com um consultor
+            </Button>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
