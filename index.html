@@ -19,17 +19,20 @@
     <meta property="og:title" content="Uniformes Profissionais e Corporativos | Natalia Grando" />
     <meta property="og:description" content="Confecção especializada em uniformes profissionais, fardas de trabalho e uniformes corporativos personalizados para empresas." />
     <meta property="og:site_name" content="Natalia Grando Uniformes" />
+    <meta property="og:image" content="https://b2bnataliagrando.com.br/img/og.jpg" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://nataliagrando.com/" />
     <meta property="twitter:title" content="Uniformes Profissionais e Corporativos | Natalia Grando" />
     <meta property="twitter:description" content="Confecção especializada em uniformes profissionais, fardas de trabalho e uniformes corporativos personalizados para empresas." />
+    <meta property="twitter:image" content="https://b2bnataliagrando.com.br/img/og.jpg" />
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://nataliagrando.com/" />
+    <link rel="canonical" href="https://b2bnataliagrando.com.br/" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Google tag (gtag.js) -->
@@ -76,79 +79,47 @@
   <body>
     <div id="root"></div>
     
-    <!-- Structured Data - Organization -->
+    <!-- Structured Data - Organization + Local Business -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
+      "@type": ["Organization", "LocalBusiness"],
       "name": "Natalia Grando Uniformes",
       "alternateName": "Natalia Grando",
-      "url": "https://nataliagrando.com",
+      "url": "https://b2bnataliagrando.com.br",
       "description": "Confecção especializada em uniformes profissionais, fardas de trabalho e uniformes corporativos personalizados para empresas",
       "address": {
         "@type": "PostalAddress",
+        "addressLocality": "Espumoso",
+        "addressRegion": "RS",
         "addressCountry": "BR"
       },
       "contactPoint": {
         "@type": "ContactPoint",
-        "telephone": "+55-11-99999-9999",
+        "email": "comercial@nataliagrando.com.br",
         "contactType": "customer service",
         "areaServed": "BR",
         "availableLanguage": "Portuguese"
-      },
-      "sameAs": [
-        "https://wa.me/5511999999999"
-      ]
-    }
-    </script>
-
-    <!-- Structured Data - Service -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Confecção de Uniformes Profissionais e Corporativos",
-      "description": "Serviços de confecção de uniformes profissionais, fardas de trabalho, uniformes corporativos, vestuário industrial e uniformes personalizados para empresas",
-      "provider": {
-        "@type": "Organization",
-        "name": "Natalia Grando Uniformes"
-      },
-      "areaServed": "BR",
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Catálogo de Uniformes",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Uniformes Profissionais",
-              "description": "Uniformes profissionais personalizados para diversas áreas"
-            }
-          },
-          {
-            "@type": "Offer", 
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Fardas de Trabalho",
-              "description": "Fardas de trabalho resistentes e duráveis"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product", 
-              "name": "Uniformes Corporativos",
-              "description": "Uniformes corporativos elegantes e funcionais"
-            }
-          }
-        ]
       }
     }
     </script>
+
+    <!-- Structured Data - FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type":"Question","name":"Qual é o pedido mínimo?","acceptedAnswer":{"@type":"Answer","text":"O pedido mínimo é de 60 peças, com até 3 modelos diferentes na primeira compra."}},
+        {"@type":"Question","name":"Qual é o prazo de entrega?","acceptedAnswer":{"@type":"Answer","text":"O prazo médio é de 45 dias úteis e varia conforme o tamanho do pedido."}},
+        {"@type":"Question","name":"Quais tamanhos vocês produzem?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com grade ampla, do 34 ao 62."}},
+        {"@type":"Question","name":"Posso aprovar uma peça antes da produção?","acceptedAnswer":{"@type":"Answer","text":"Sim. Enviamos uma peça piloto física ou digital para aprovação."}},
+        {"@type":"Question","name":"Como funcionam as reposições?","acceptedAnswer":{"@type":"Answer","text":"Os modelos não saem de linha, permitindo reposições com o mesmo padrão."}},
+        {"@type":"Question","name":"Como os uniformes são entregues?","acceptedAnswer":{"@type":"Answer","text":"Entregamos no endereço da empresa, organizados em kits individuais por colaborador."}}
+      ]
+    }
+    </script>
     
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
