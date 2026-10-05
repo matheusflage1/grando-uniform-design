@@ -11,8 +11,9 @@ declare global {
 export type TrackEvent =
   | 'cta_click'
   | 'form_start'
-  | 'form_step1_complete'
-  | 'form_submit'
+  | 'form_step_2'
+  | 'generate_lead'
+  | 'click_email'
   | 'whatsapp_modal_open'
   | 'whatsapp_lead_captured'
   | 'whatsapp_redirect'
